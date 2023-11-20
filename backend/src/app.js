@@ -7,6 +7,7 @@ const { Sequelize } = require('sequelize');
 const passportConfig = require('./config/passportConfig'); 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
+const productRoutes = require('./routes/product');
 
 
 const app = express();
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/product', productRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
