@@ -1,12 +1,12 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-const { User } = require('./models');
+const  Usuario = require('../models/Usuario');
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await User.findOne({ where: { username } });
+      const user = await Usuario.findOne({ where: { username } });
       if (!user) return done(null, false, { message: 'Usuario no encontrado' });
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -25,7 +25,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findByPk(id);
+    const user = await Usuario.findByPk(id);
     done(null, user);
   } catch (error) {
     done(error);

@@ -1,4 +1,5 @@
-const { Usuario, Carrito, Cliente,Direccion, UsuarioRol,Rol,DetalleCarrito, OrdenCompra} = require('../models');
+const Cliente = require('../models/Cliente');
+const  Direccion = require('../models/Direccion');
 
 exports.getUserProfile = (req, res) => {
   res.json({ user: req.user });
