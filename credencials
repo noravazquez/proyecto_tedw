@@ -1,0 +1,15 @@
+BASE DE DATOS: BDTEDW
+password aws rds: PfGHuuGJZw0A1CSt7tHt
+
+ssh -i "labsuser.pem" ubuntu@ec2-3-92-130-39.compute-1.amazonaws.com
+
+sudo apt install apache2 libapache2-mod-php8.1 php8.1-pgsql
+
+sudo apt install postgresql
+
+systemctl status apache2
+
+git clone https://github.com/noravazquez/proyecto_tedw.git
+
+psql -h db1.cfyu3whtuwpf.us-east-1.rds.amazonaws.com -U postgres -d BDTEDW
+
