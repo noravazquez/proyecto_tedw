@@ -1,32 +1,23 @@
-require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const { Sequelize } = require('sequelize');
-const passportConfig = require('./config/passportConfig'); 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
-
+const addressRoutes = require('./routes/address');
+const cartRoutes = require('./routes/cart');
+const checkoutRoutes = require('./routes/checkout');
+const reportsRoutes = require('./routes/reports');
+const sequelize = require('./config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-
-// Configuración de Sequelize
-const sequelize = new Sequelize({
-  database: '',
-  username: '',
-  password: '',
-  host: '', // El endpoint de tu instancia RDS en AWS
-  port: '5432', 
-  dialect: 'postgres',
-  logging: false,
-});
-
+// Init Sequelize
 sequelize
   .authenticate()
   .then(() => {
@@ -36,12 +27,10 @@ sequelize
     console.error('Error al conectar con la base de datos:', error);
   });
 
-
 // Configuración de Passport
-app.use(session({ secret: 'process.env.PASSPORT_SECRET', resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.PASSPORT_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Rutas
 app.get('/', (req, res) => {
@@ -50,6 +39,10 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/product', productRoutes);
+app.use('/api/stats', reportsRoutes);
+app.use('/api/address', addressRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
