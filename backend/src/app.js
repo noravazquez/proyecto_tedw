@@ -13,7 +13,7 @@ const reportsRoutes = require('./routes/reports');
 const sequelize = require('./config/database');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
@@ -32,7 +32,7 @@ sequelize
   });
 
 // Configuración de Passport
-app.use(session({ secret: process.env.PASSPORT_SECRET, resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'aiura', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
