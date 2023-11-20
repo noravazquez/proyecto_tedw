@@ -1,55 +1,45 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import logo from './assets/logo-dd.png'
-import { FaSearch, FaHeart, FaUser, FaShoppingCart } from "react-icons/fa";
+import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
 
 const Header = () => {
+
   return (
     <>
-      <header className="header-top py-3">
-        <div className="contrainer-xxl">
-          <div className="row align-items-center">
-            <div className="col-3 d-flex align-items-center">
-              <img src={logo} alt="Logo"/>
-              <h2>
-                <Link className="text-secondary">Innovatech</Link>
-              </h2>
-            </div>
-            <div className="col-4">
-              <div className="input-group">
-                <input type="text" className="form-control py-2" placeholder="Buscar producto..." aria-label="Buscar producto..." aria-describedby="basic-addon2" />
-                <span className="input-group-text p-3" id="basic-addon2"><FaSearch className="fs-6"/></span>
-              </div>
-            </div>
-            <div className="col-5">
-              <div className="header-top-links d-flex align-items-center justify-content-between">
-                <div style={{marginLeft:'180px'}}>
-                  <Link className="d-flex align-items-center gap-10 text-secondary">
-                    <FaHeart />
-                    <p className="mb-0">
-                      Favoritos
-                    </p>
+      <header>
+        <nav className="navbar navbar-expand-lg bg-body-tertiary" style={{backgroundColor:'#dfe7f2'}}>
+          <div className="container-fluid">
+            <Link className="navbar-brand text-secondary d-flex align-items-center gap-30">
+              <img src={logo} alt="Logo" width="40" height="40" className="d-inline-block align-text-top" />
+              <h2>Innovatech</h2>
+            </Link>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav ms-lg-auto mb-2 mb-lg-0">
+                <li className="nav-item search-item">
+                  <Link className="nav-link text-secondary me-lg-5">
+                    <FaSearch />
                   </Link>
-                </div>
-                <div style={{marginLeft: '10px'}}>
-                  <Link className="d-flex align-items-center gap-10 text-secondary">
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-secondary me-lg-5" >
                     <FaUser />
-                    <p className="mb-0">
-                      Log in <br /> Sign up
-                    </p>
                   </Link>
-                </div>
-                <div style={{marginRight: '20px'}}>
-                  <Link className="d-flex align-items-center gap-10 text-secondary">
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link text-secondary me-lg-5">
                     <FaShoppingCart />
                     <div className="cart-count">0</div>
                   </Link>
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
+        </nav>
       </header>
 
       <header className="header-bottom py-3">
