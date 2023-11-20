@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
 const { Sequelize } = require('sequelize');
-const passportConfig = require('./config/passportConfig');
-const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes');
+const passportConfig = require('./config/passportConfig'); 
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,13 +26,26 @@ const sequelize = new Sequelize({
   logging: false,
 });
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Conexión a la base de datos establecida correctamente.');
+  })
+  .catch((error) => {
+    console.error('Error al conectar con la base de datos:', error);
+  });
+
+
 // Configuración de Passport
-app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'process.env.PASSPORT_SECRET', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig();
+
 
 // Rutas
+app.get('/', (req, res) => {
+  res.send('¡Bienvenido a mi aplicación!');
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 
