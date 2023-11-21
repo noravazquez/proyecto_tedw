@@ -19,15 +19,15 @@ const Footer = () => {
                 <a href="tel:+52 4737324657" className="mt-3 d-block mb-1 text-secondary">+52 4737324657</a>
                 <a href="mailto:tiwossoummofoi-6154@yopmail.com" className="mt-2 d-block mb-0 text-secondary">tiwossoummofoi-6154@yopmail.com</a>
                 <div className="social-icons d-flex align-items-center gap-30 mt-4">
-                  <a className="text-secondary" href="https://www.instagram.com/electron_mx/">
+                  <Link className="text-secondary" to="https://www.instagram.com/electron_mx/">
                     <FaInstagram className="fs-4"/>
-                  </a>
-                  <a className="text-secondary" href="https://www.facebook.com/electronmx">
+                  </Link>
+                  <Link className="text-secondary" to="https://www.facebook.com/electronmx">
                     <FaFacebook className="fs-4"/>
-                  </a>
-                  <a className="text-secondary" href="https://twitter.com/ElectronMexico">
+                  </Link>
+                  <Link className="text-secondary" to="https://twitter.com/ElectronMexico">
                     <FaSquareXTwitter className="fs-4"/>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
