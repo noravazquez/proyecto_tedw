@@ -1,25 +1,10 @@
-exports.aplicarCuponDescuento = async (req, res) => {
-    try {
-      const { cuponCodigo } = req.body; 
-      const montoTotal = /* Obtener el monto total de la compra */1;
-      const { nuevoMontoTotal, descuentoAplicado } = await aplicarDescuentoConCupon(cuponCodigo, montoTotal);
-
-      res.json({
-        message: 'Cupón aplicado correctamente',
-        nuevoMontoTotal,
-        descuentoAplicado,
-      });
-    } catch (error) {
-      console.error('Error al aplicar cupón de descuento:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    }
-  };
 
   exports.realizarCompra = async (req, res) => {
     try {
       const { idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito } = req.body;
-      const nuevaOrden = await realizarCompra(
+      const nuevaOrden = await registrarCompra(
         idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito);
+      
       res.json({
         message: 'Compra realizada con éxito',
         nuevaOrden,
@@ -60,7 +45,7 @@ const aplicarDescuentoConCupon = async (cuponCodigo, montoTotal) => {
 };
 
 // Método para agregar la orden
-const realizarCompra = async (idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito) => {
+const registrarCompra = async (idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito) => {
   const nuevaOrden = await OrdenCompra.create({
     fecha: new Date(),
     estado_orden: 'En proceso',

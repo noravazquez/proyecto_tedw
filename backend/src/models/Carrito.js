@@ -20,7 +20,7 @@ const Carrito = sequelize.define('Carrito', {
   },
   id_cupon_descuento: { 
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 

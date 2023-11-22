@@ -35,6 +35,6 @@ const Direccion = sequelize.define('Direccion', {
   },
 });
 
-Cliente.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
+Direccion.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
 
 module.exports = Direccion;
