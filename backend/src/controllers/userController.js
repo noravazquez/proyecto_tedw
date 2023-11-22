@@ -1,19 +1,14 @@
 const Cliente = require('../models/Cliente');
 const  Direccion = require('../models/Direccion');
 const  OrdenCompra  = require('../models/OrdenCompra');
-
-// Ver datos de cliente
-exports.getUserProfile = (req, res) => {
-  res.json({ user: req.user });
-};
-
+const Usuario = require('../models/Usuario');
 
 // Ver datos de facturación y envío
-exports.getUserBillingInfo = async (req, res) => {
+exports.getUserInfo = async (req, res) => {
   try {
     const cliente = await Cliente.findAll({
       where: { id_usuario: req.user.id_usuario },
-      include: [{ model: Direccion, as: 'DireccionEnvio' }, { model: Direccion, as: 'DireccionFacturacion' }],
+      include: [{ model: Direccion }, { model: Usuario}],
     });
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
@@ -25,11 +20,61 @@ exports.getUserBillingInfo = async (req, res) => {
   }
 };
 
+exports.updateClientInfo = async (req, res) => {
+  const { nombre, apellido_paterno, apellido_materno, telefono } = req.body;
+  try {
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+    });
+
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente no encontrado' });
+    }
+
+    await cliente.update({
+      nombre,
+      apellido_paterno,
+      apellido_materno,
+      telefono,
+    });
+
+    res.json({ message: 'Información de cliente actualizada correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar la información del cliente' });
+  }
+};
+
+exports.updateUserInfo = async (req, res) => {
+  const { usuario, correo, contrasena } = req.body;
+
+  try {
+    const usuarioBD = await Usuario.findByPk(req.user.id_usuario);
+
+    if (!usuarioBD) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    // Actualizar los datos del usuario
+    await usuarioBD.update({
+      usuario: usuario,
+      correo,
+      contrasena,
+    });
+
+    res.json({ message: 'Datos de usuario actualizados correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar los datos del usuario' });
+  }
+};
+
+
 
 // Ver ordenes por cliente
 exports.getUserOrders = async (req, res) => {
   try {
-    const orders = await Order.findAll({ where: { id_cliente: req.user.id_cliente } });
+    const orders = await OrdenCompra.findAll({ where: { id_cliente: req.user.id_cliente } });
     res.json({ orders });
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener historial de pedidos' });
