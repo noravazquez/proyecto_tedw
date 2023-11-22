@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Categoria = require('./Categoria');
 const Proveedor = require('./Proveedor');
-const OrdenCompra = require('./OrdenCompra');
+
 
 const Producto = sequelize.define('Producto', {
   id_producto: {
@@ -40,7 +40,7 @@ const Producto = sequelize.define('Producto', {
   },
 });
 
-OrdenCompra.belongsTo(Categoria, { foreignKey: 'id_categoria', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(Proveedor, { foreignKey: 'id_proveedor', onDelete: 'CASCADE' });
+Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', onDelete: 'CASCADE' });
+Producto.belongsTo(Proveedor, { foreignKey: 'id_proveedor', onDelete: 'CASCADE' });
 
 module.exports = Producto;
