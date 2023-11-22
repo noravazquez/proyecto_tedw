@@ -5,7 +5,7 @@ const Direccion = require('../models/Direccion');
 exports.obtenerDirecciones = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_cliente: req.user.id_cliente },
       include: [
         { model: Direccion, as: 'Direccion' },
       ],
@@ -26,7 +26,7 @@ exports.obtenerDirecciones = async (req, res) => {
 exports.actualizarDirecciones = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_cliente: req.user.id_cliente },
       include: [
         { model: Direccion, as: 'Direccion' },
       ],
@@ -48,7 +48,7 @@ exports.actualizarDirecciones = async (req, res) => {
 exports.agregarDireccion = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_cliente: req.user.id_cliente },
     });
 
     if (!cliente) {
