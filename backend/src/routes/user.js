@@ -1,11 +1,13 @@
 const express = require('express');
 const { ensureAuthenticated } = require('../config/authMiddleware');
-const { getUserProfile, getUserOrders, generateOrderChart } = require('../controllers/userController');
+const { getUserInfo, getUserOrders, generateOrderChart } = require('../controllers/userController');
 
 const router = express.Router();
 
-router.get('/profile', ensureAuthenticated, getUserProfile);
+router.get('/profile', ensureAuthenticated, getUserInfo);
 router.get('/orders', ensureAuthenticated, getUserOrders);
 router.get('/order-chart', ensureAuthenticated, generateOrderChart);
+router.patch('/info-client', ensureAuthenticated, updateClientInfo);
+router.patch('/info-user', ensureAuthenticated, updateUserInfo);
 
 module.exports = router;

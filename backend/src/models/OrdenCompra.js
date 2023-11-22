@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Cliente = require('./Cliente');
-const Carrito = require('./Carrito');
+const DetalleCarrito = require('./DetalleCarrito');
 const Direccion = require('./Direccion');
 const MetodoPago = require('./MetodoPago');
 
@@ -24,14 +24,11 @@ const OrdenCompra = sequelize.define('OrdenCompra', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  id_carrito: { 
+  id_detalle_carrito: { 
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  id_direccion_envio: { 
-    type: DataTypes.INTEGER,
-  },
-  id_direccion_facturacion: { 
+  id_direccion: { 
     type: DataTypes.INTEGER,
   },
   id_metodo_pago: { 
@@ -40,9 +37,8 @@ const OrdenCompra = sequelize.define('OrdenCompra', {
 });
 
 OrdenCompra.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(Carrito, { foreignKey: 'id_carrito', onDelete: 'CASCADE' });
+OrdenCompra.belongsTo(DetalleCarrito, { foreignKey: 'id_detalle_carrito', onDelete: 'CASCADE' });
 OrdenCompra.belongsTo(MetodoPago, { foreignKey: 'id_metodo_pago', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(Direccion, { foreignKey: 'id_direccion_envio', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(Direccion, { foreignKey: 'id_direccion_facturacion', onDelete: 'CASCADE' });//no se si jale asi pero a ver que pasa
+OrdenCompra.belongsTo(Direccion, { foreignKey: 'id_direccion', onDelete: 'CASCADE' });
 
 module.exports = OrdenCompra;
