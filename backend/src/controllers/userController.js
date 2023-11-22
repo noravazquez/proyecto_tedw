@@ -74,9 +74,28 @@ exports.updateUserInfo = async (req, res) => {
 // Ver ordenes por cliente
 exports.getUserOrders = async (req, res) => {
   try {
-    const orders = await OrdenCompra.findAll({ where: { id_cliente: req.user.id_cliente } });
+    const orders = await OrdenCompra.findAll({
+      where: { id_cliente: req.user.id_cliente },
+      include: [
+        {
+          model: DetalleCarrito,
+          include: [
+            {
+              model: Carrito,
+              include: [
+                {model: Cliente,}, {model: CuponDescuento,},
+              ],
+            },
+            {model: Producto,},
+          ],
+        },
+        {model: Direccion,}, {model: MetodoPago,},
+      ],
+    });
+
     res.json({ orders });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Error al obtener historial de pedidos' });
   }
 };
