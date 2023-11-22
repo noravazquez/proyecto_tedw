@@ -1,4 +1,6 @@
 const Producto = require('../models/Producto')
+const Categoria = require('../models/Categoria')
+const Proveedor = require('../models/Proveedor')
 
 exports.obtenerProductos = async (req, res) =>{
     try {
@@ -9,3 +11,21 @@ exports.obtenerProductos = async (req, res) =>{
         res.status(500).json({ error: 'Error interno del servidor' });
     }
 };
+
+exports.obtenerDetalleProducto = async (req, res) => {
+    try {
+      const { idProducto } = req.params;
+      const producto = await Producto.findByPk(idProducto, {
+        include: [Categoria, Proveedor],
+      });
+  
+      if (!producto) {
+        return res.status(404).json({ error: 'Producto no encontrado' });
+      }
+  
+      res.json({ producto });
+    } catch (error) {
+      console.error('Error al obtener detalles del producto:', error);
+      res.status(500).json({ error: 'Error interno del servidor' });
+    }
+  };
