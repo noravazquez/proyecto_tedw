@@ -21,17 +21,23 @@ const Header = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav ms-lg-auto mb-2 mb-lg-0">
                 <li className="nav-item search-item">
-                  <Link className="nav-link text-secondary me-lg-5">
+                  <Link className="nav-link text-secondary me-lg-5 d-flex align-items-center">
                     <FaSearch />
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-secondary me-lg-5" >
-                    <FaUser />
-                  </Link>
+                  <div className="dropdown">
+                    <button className="btn btn-secondary text-secondary dropdown-toggle bg-transparent border-0 gap-15 d-flex align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <FaUser />
+                    </button>
+                    <ul className="dropdown-menu">
+                      <li><Link className="dropdown-item" to="/login">Login</Link></li>
+                      <li><Link className="dropdown-item" to="/register">Register</Link></li>
+                    </ul>
+                  </div>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-secondary me-lg-5">
+                  <Link className="nav-link text-secondary me-lg-5 d-flex align-items-center">
                     <FaShoppingCart />
                     <div className="cart-count">0</div>
                   </Link>

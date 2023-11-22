@@ -4,7 +4,6 @@ import Banner from '../components/home/Banner'
 import Wrapper from '../components/home/Wrapper'
 import WrapperCategories from '../components/home/WrapperCategories'
 import WrapperMarquee from '../components/home/WrapperMarquee'
-import ProductCard from '../components/ProductCard'
 import sale from '../components/assets/sale.png'
 
 const Home = () => {
@@ -23,6 +22,7 @@ const Home = () => {
       <section>
         <WrapperCategories />
       </section>
+      {/* Sección de productos populares 
       <section className="featured-wrapper home-wrapper py-5 px-4">
         <div className="row">
           <div className="col-12">
@@ -36,9 +36,11 @@ const Home = () => {
           </div>
         </div>
       </section>
+      */}
       <section>
         <img src={sale} className="img-fluid" alt="Special Offer"/>
       </section>
+      {/*
       <section className="popular-wrapper home-wrapper py-5 px-2">
         <div className="row">
           <div className="col-12">
@@ -52,6 +54,7 @@ const Home = () => {
           <ProductCard />
         </div>
       </section>
+      */}
       <section>
         <WrapperMarquee />
       </section>

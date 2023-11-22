@@ -1,10 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { LuGrip, LuGripHorizontal, LuGripVertical } from "react-icons/lu";
 import ProductCard from '../ProductCard'
 
 const ProductList = () => {
+    const [products, setProducts] = useState([]);
     const [grid, setGrid] = useState(4);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+              const response = await axios.get('http://localhost:3001/api/product/products');
+              const { productos } = response.data;
+              
+              if (Array.isArray(productos)) {
+                setProducts(productos);
+              } else {
+                console.error('Response data "productos" is not an array:', productos);
+              }
+            } catch (error) {
+              console.error('Error fetching products:', error);
+            }
+        };          
+    
+        fetchProducts();
+    }, []);
     
   return (
     <div className="col-9">
@@ -23,10 +44,9 @@ const ProductList = () => {
         </div>
         <div className="product-list pb-5">
             <div className="d-flex gap-10 flex-wrap">
-                <ProductCard grid={grid} />
-                <ProductCard grid={grid} />
-                <ProductCard grid={grid} />
-                <ProductCard grid={grid} />
+                {products.map((product) => (
+                    <ProductCard key={product.id_producto} grid={grid} product={product} />
+                ))}
             </div>
         </div>
     </div>
