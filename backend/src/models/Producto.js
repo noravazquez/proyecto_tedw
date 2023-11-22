@@ -40,7 +40,7 @@ const Producto = sequelize.define('Producto', {
   },
 });
 
-OrdenCompra.belongsTo(Categoria, { foreignKey: 'id_categoria', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(Proveedor, { foreignKey: 'id_proveedor', onDelete: 'CASCADE' });
+Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', onDelete: 'CASCADE' });
+Producto.belongsTo(Proveedor, { foreignKey: 'id_proveedor', onDelete: 'CASCADE' });
 
 module.exports = Producto;
