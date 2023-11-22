@@ -108,7 +108,7 @@ exports.generateOrderChart = async (req, res) => {
 
     const orderTotals = await OrdenCompra.findAll({
       attributes: [
-        [sequelize.fn('date_part', 'month', sequelize.col('fecha')), 'month'],
+        [sequelize.fn('DATE_PART', 'month', sequelize.col('fecha')), 'month'],
         [sequelize.fn('count', sequelize.col('id_orden_compra')), 'total'],
       ],
       where: {
