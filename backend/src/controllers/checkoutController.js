@@ -2,8 +2,9 @@
   exports.realizarCompra = async (req, res) => {
     try {
       const { idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito } = req.body;
-      const nuevaOrden = await realizarCompra(
+      const nuevaOrden = await registrarCompra(
         idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito);
+      
       res.json({
         message: 'Compra realizada con éxito',
         nuevaOrden,
@@ -44,7 +45,7 @@ const aplicarDescuentoConCupon = async (cuponCodigo, montoTotal) => {
 };
 
 // Método para agregar la orden
-const realizarCompra = async (idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito) => {
+const registrarCompra = async (idCliente, idDireccionEnvio, idDireccionFacturacion, idMetodoPago, idCarrito) => {
   const nuevaOrden = await OrdenCompra.create({
     fecha: new Date(),
     estado_orden: 'En proceso',
