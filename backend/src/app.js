@@ -13,7 +13,7 @@ const reportsRoutes = require('./routes/reports');
 const sequelize = require('./config/database');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
@@ -40,6 +40,7 @@ app.use(passport.session());
 app.get('/', (req, res) => {
   res.send('¡Bienvenido a mi aplicación!');
 });
+
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/product', productRoutes);
