@@ -1,19 +1,3 @@
-exports.aplicarCuponDescuento = async (req, res) => {
-    try {
-      const { cuponCodigo } = req.body; 
-      const montoTotal = /* Obtener el monto total de la compra */1;
-      const { nuevoMontoTotal, descuentoAplicado } = await aplicarDescuentoConCupon(cuponCodigo, montoTotal);
-
-      res.json({
-        message: 'Cupón aplicado correctamente',
-        nuevoMontoTotal,
-        descuentoAplicado,
-      });
-    } catch (error) {
-      console.error('Error al aplicar cupón de descuento:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    }
-  };
 
   exports.realizarCompra = async (req, res) => {
     try {
