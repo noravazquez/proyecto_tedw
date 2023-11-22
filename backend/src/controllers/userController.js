@@ -20,6 +20,8 @@ exports.getUserInfo = async (req, res) => {
   }
 };
 
+
+//update info client
 exports.updateClientInfo = async (req, res) => {
   const { nombre, apellido_paterno, apellido_materno, telefono } = req.body;
   try {
