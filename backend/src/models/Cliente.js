@@ -31,5 +31,6 @@ const Cliente = sequelize.define('Cliente', {
 });
 
 Cliente.belongsTo(Usuario, { foreignKey: 'id_usuario', onDelete: 'CASCADE' });
+Cliente.hasMany(Direccion, { foreignKey: 'id_cliente' });
 
 module.exports = Cliente;
