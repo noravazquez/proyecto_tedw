@@ -14,7 +14,7 @@ const sequelize = require('./config/database');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -33,7 +33,7 @@ sequelize
     console.error('Error al conectar con la base de datos:', error);
   });
 
-// Configuración de Passport
+// Configuración de Passport y sesiones
 app.use(session({ secret: 'aiura', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());

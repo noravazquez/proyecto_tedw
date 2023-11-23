@@ -1,3 +1,5 @@
+const passport = require('passport');
+
 const ensureAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
