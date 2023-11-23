@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Usuario = require('./Usuario');
+const Direccion = require('./Direccion');
 
 const Cliente = sequelize.define('Cliente', {
   id_cliente: {
@@ -31,5 +32,6 @@ const Cliente = sequelize.define('Cliente', {
 });
 
 Cliente.belongsTo(Usuario, { foreignKey: 'id_usuario', onDelete: 'CASCADE' });
+Cliente.hasMany(Direccion, { foreignKey: 'id_cliente' });
 
 module.exports = Cliente;

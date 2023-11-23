@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Cliente = require('./Cliente');
 
 const Usuario = sequelize.define('Usuario', {
   id_usuario: {
@@ -21,5 +22,7 @@ const Usuario = sequelize.define('Usuario', {
     allowNull: false,
   },
 });
+
+Usuario.hasOne(Cliente, { foreignKey: 'id_usuario' });
 
 module.exports = Usuario;
