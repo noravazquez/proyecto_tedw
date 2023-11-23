@@ -31,15 +31,30 @@ passport.use(
 
 // Serialización del usuario para almacenar en la sesión
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  console.log('Serialize User:', user);
+  done(null, user.id_usuario);
 });
 
-// Deserialización del usuario al recuperarlo de la sesión
 passport.deserializeUser(async (id, done) => {
+  console.log('Deserialize User ID:', id);
   try {
     const user = await Usuario.findByPk(id);
-    done(null, user);
+    console.log('Deserialized User:', user);
+
+    // Verifica si el objeto user tiene todos los campos necesarios
+    if (user) {
+      console.log('User ID:', user.id_usuario);
+      console.log('Username:', user.usuario);
+      console.log('Email:', user.correo);
+      // Puedes imprimir más propiedades según sea necesario
+
+      done(null, user);
+    } else {
+      console.log('Usuario no encontrado');
+      done(null, false, { message: 'Usuario no encontrado' });
+    }
   } catch (error) {
+    console.error('Error al deserializar el usuario:', error);
     done(error);
   }
 });

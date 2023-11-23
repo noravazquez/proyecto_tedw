@@ -15,7 +15,7 @@ const sequelize = require('./config/database');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3003;
 
 app.use(cors());
 app.use(bodyParser.json());
