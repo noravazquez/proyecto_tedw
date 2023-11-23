@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const passport = require('./config/passportConfig');
 const session = require('express-session');
 const  Sequelize  = require('sequelize');
@@ -14,7 +15,7 @@ const sequelize = require('./config/database');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 app.use(cors());
 app.use(bodyParser.json());
