@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const passport = require('passport');
+const passport = require('./config/passportConfig');
 const session = require('express-session');
-const { Sequelize } = require('sequelize');
+const  Sequelize  = require('sequelize');
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
