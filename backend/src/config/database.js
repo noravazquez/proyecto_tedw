@@ -19,4 +19,29 @@ dialectOptions: {
 logging: console.log,
 });
 
-module.exports = sequelize;
+
+
+
+const SequelizeAuto = require('sequelize-auto');
+
+
+const auto = new SequelizeAuto('database', 'username', 'password', {
+  host: 'db1.cfyu3whtuwpf.us-east-1.rds.amazonaws.com',
+  dialect: 'postgres',
+  directory: '../models',
+  port: 5432,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false // Esto es necesario si tu certificado no está firmado por una entidad de certificación confiable
+    }
+  },
+});
+
+auto.run(function (err) {
+  if (err) throw err;
+  console.log(auto.tables); // Las tablas estarán disponibles en este objeto
+});
+
+
+module.exports = {sequelize, auto};
