@@ -4,6 +4,9 @@ const passport = require('passport');
 const passportC = require('./config/passportConfig');
 const session = require('express-session');
 const  Sequelize  = require('sequelize');
+const sequelize = require('./config/database');
+const initModels = require('./models/init-models'); 
+
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
@@ -11,7 +14,7 @@ const addressRoutes = require('./routes/address');
 const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const reportsRoutes = require('./routes/reports');
-const sequelize = require('./config/database');
+
 const cors = require('cors');
 
 const app = express();
@@ -25,11 +28,13 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Conexión a la base de datos establecida correctamente.');
+    //sequelize.sync({ logging: console.log })
     return sequelize.sync(); // Sincronizar modelos con la base de datos
   })
   .then(() => {
     console.log('Modelos sincronizados con la base de datos.');
-    console.log(sequelize.models);
+    const models = initModels(sequelize);  // Inicializa los modelos
+    console.log(models);
   })
   .catch((error) => {
     console.error('Error al conectar con la base de datos:', error);
