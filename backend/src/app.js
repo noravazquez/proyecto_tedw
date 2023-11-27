@@ -29,6 +29,7 @@ sequelize
   })
   .then(() => {
     console.log('Modelos sincronizados con la base de datos.');
+    console.log(sequelize.models);
   })
   .catch((error) => {
     console.error('Error al conectar con la base de datos:', error);
