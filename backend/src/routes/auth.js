@@ -1,13 +1,13 @@
-// const express = require('express');
-// const passport = require('passport');
-// const { ensureAuthenticated } = require('../config/authMiddleware');
-// const { registerUser, loginUser, logoutUser } = require('../controllers/authController');
+const express = require('express');
+const passport = require('passport');
+const { ensureAuthenticated } = require('../config/authMiddleware');
+const { registerUser, loginUser, logoutUser } = require('../controllers/authController');
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.post('/register', registerUser);
-// router.post('/login', passport.authenticate('local'), loginUser);
-// router.get('/logout', ensureAuthenticated,  logoutUser);
+router.post('/register', registerUser);
+router.post('/login', passport.authenticate('local'), loginUser);
+router.get('/logout', ensureAuthenticated,  logoutUser);
 
 
-// module.exports = router;
+module.exports = router;
