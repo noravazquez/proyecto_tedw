@@ -1,6 +1,6 @@
-const Producto = require('../models/Producto')
-const Categoria = require('../models/Categoria')
-const Proveedor = require('../models/Proveedor')
+const Producto = require('../models_antes/Producto')
+const Categoria = require('../models_antes/Categoria')
+const Proveedor = require('../models_antes/Proveedor')
 
 exports.obtenerProductos = async (req, res) =>{
     try {

@@ -1,5 +1,5 @@
-const Cliente = require('../models/Cliente');
-const Direccion = require('../models/Direccion');
+const Cliente = require('../models_antes/Cliente');
+const Direccion = require('../models_antes/Direccion');
 
 // Obtener ambas direcciones de facturación y envío del cliente
 exports.obtenerDirecciones = async (req, res) => {

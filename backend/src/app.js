@@ -11,7 +11,7 @@ const addressRoutes = require('./routes/address');
 const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const reportsRoutes = require('./routes/reports');
-const sequelize = require('./config/database');
+const { sequelize, auto } = require('./config/database');
 const cors = require('cors');
 
 const app = express();
