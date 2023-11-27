@@ -35,8 +35,8 @@ const auto = new SequelizeAuto('BDTEDW', 'postgres', 'PfGHuuGJZw0A1CSt7tHt', {
 
 auto.run(function (err) {
   if (err) throw err;
-  console.log(auto.tables); // Las tablas estarán disponibles en este objeto
+  console.log(auto.tables); 
 });
 
 
-module.exports = {sequelize, auto};
+module.exports = sequelize;
