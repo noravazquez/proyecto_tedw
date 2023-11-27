@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const { agregarAlCarrito, obtenerCarrito, aplicarCuponDescuento } = require('../controllers/cartCotroller');
+// const express = require('express');
+// const router = express.Router();
+// const { agregarAlCarrito, obtenerCarrito, aplicarCuponDescuento } = require('../controllers/cartCotroller');
 
-router.post('/agregar-al-carrito/:idProducto', agregarAlCarrito);
-router.get('/carrito', obtenerCarrito);
-router.get('/cupon', aplicarCuponDescuento);
+// router.post('/agregar-al-carrito/:idProducto', agregarAlCarrito);
+// router.get('/carrito', obtenerCarrito);
+// router.get('/cupon', aplicarCuponDescuento);
 
-module.exports = router;
+// module.exports = router;
