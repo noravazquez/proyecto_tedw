@@ -11,7 +11,7 @@ const addressRoutes = require('./routes/address');
 const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const reportsRoutes = require('./routes/reports');
-const { sequelize, auto } = require('./config/database');
+const { sequelize } = require('./config/database');
 const cors = require('cors');
 
 const app = express();
@@ -44,13 +44,13 @@ app.get('/', (req, res) => {
   res.send('¡Bienvenido a mi aplicación!');
 });
 
-// app.use('/api/auth', authRoutes);
-// app.use('/api/user', userRoutes);
-// app.use('/api/product', productRoutes);
-// app.use('/api/stats', reportsRoutes);
-// app.use('/api/address', addressRoutes);
-// app.use('/api/cart', cartRoutes);
-// app.use('/api/checkout', checkoutRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/product', productRoutes);
+app.use('/api/stats', reportsRoutes);
+app.use('/api/address', addressRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
