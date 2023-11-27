@@ -1,7 +1,7 @@
-const Cliente = require('../models_antes/Cliente');
-const  Direccion = require('../models_antes/Direccion');
-const  OrdenCompra  = require('../models_antes/OrdenCompra');
-const Usuario = require('../models_antes/Usuario');
+//const Cliente = require('../models/Cliente');
+//const  Direccion = require('../models/Direccion');
+//const  OrdenCompra  = require('../models/OrdenCompra');
+//const Usuario = require('../models/Usuario');
 
 // Ver datos de facturación y envío
 exports.getUserInfo = async (req, res) => {
