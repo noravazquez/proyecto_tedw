@@ -1,6 +1,6 @@
-const Carrito = require('../models/Carrito');
-const DetalleCarrito = require('../models/DetalleCarrito');
-const CuponDescuento = require('../models/CuponDescuento');
+const Carrito = require('../models_antes/Carrito');
+const DetalleCarrito = require('../models_antes/DetalleCarrito');
+const CuponDescuento = require('../models_antes/CuponDescuento');
 
 exports.agregarAlCarrito = async (req, res) => {
   try {

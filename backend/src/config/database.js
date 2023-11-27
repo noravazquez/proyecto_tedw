@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+const SequelizeAuto = require('sequelize-auto');
 
 const sequelize = new Sequelize({
   database: 'BDTEDW',
@@ -13,19 +14,13 @@ const sequelize = new Sequelize({
 dialectOptions: {
   ssl: {
     require: true,
-    rejectUnauthorized: false, // Puede ser necesario configurar esto dependiendo de tu instancia
+    rejectUnauthorized: false,
   },
 },
 logging: console.log,
 });
 
-
-
-
-const SequelizeAuto = require('sequelize-auto');
-
-
-const auto = new SequelizeAuto('database', 'username', 'password', {
+const auto = new SequelizeAuto('BDTEDW', 'postgres', 'PfGHuuGJZw0A1CSt7tHt', {
   host: 'db1.cfyu3whtuwpf.us-east-1.rds.amazonaws.com',
   dialect: 'postgres',
   directory: '../models',
@@ -33,7 +28,7 @@ const auto = new SequelizeAuto('database', 'username', 'password', {
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false // Esto es necesario si tu certificado no está firmado por una entidad de certificación confiable
+      rejectUnauthorized: false
     }
   },
 });

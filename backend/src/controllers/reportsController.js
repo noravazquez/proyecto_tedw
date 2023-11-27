@@ -1,6 +1,6 @@
-const  OrdenCompra  = require('../models/OrdenCompra');
-const  DetalleCarrito = require('../models/DetalleCarrito');
-const  Cliente = require('../models/Cliente');
+const  OrdenCompra  = require('../models_antes/OrdenCompra');
+const  DetalleCarrito = require('../models_antes/DetalleCarrito');
+const  Cliente = require('../models_antes/Cliente');
 
 // Reporte Total de ventas semanales, mensuales y anuales
 exports.totalVentas = async (req, res) => {
