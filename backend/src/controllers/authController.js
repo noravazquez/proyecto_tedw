@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const Usuario = require('../models/usuarios');
+const Usuarios = require('../models/usuarios');
 
 exports.registerUser = async (req, res) => {
   try {
@@ -10,8 +10,10 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
     }
 
-    const existingUser = await Usuario.findOne({ where: { usuario: req.body.usuario } });
-    const existingEmail = await Usuario.findOne({ where: { correo: req.body.correo } });
+    const [existingUser, existingEmail] = await Promise.all([
+      Usuarios.findOne({ where: { usuario: req.body.usuario } }),
+      Usuarios.findOne({ where: { correo: req.body.correo } }),
+    ]);
 
     if (existingUser) {
       return res.status(400).json({ error: 'Este nombre de usuario ya existe registrado' });
