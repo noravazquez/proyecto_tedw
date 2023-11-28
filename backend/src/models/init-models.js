@@ -14,6 +14,7 @@ var _usuariorols = require("./usuariorols");
 var _usuarios = require("./usuarios");
 
 function initModels(sequelize) {
+  console.log('Iniciando modelos...');
   var carritos = _carritos(sequelize, DataTypes);
   var categorias = _categorias(sequelize, DataTypes);
   var clientes = _clientes(sequelize, DataTypes);
@@ -56,6 +57,7 @@ function initModels(sequelize) {
   usuarios.hasMany(clientes, { as: "clientes", foreignKey: "id_usuario"});
   usuariorols.belongsTo(usuarios, { as: "id_usuario_usuario", foreignKey: "id_usuario"});
   usuarios.hasMany(usuariorols, { as: "usuariorols", foreignKey: "id_usuario"});
+  console.log('Modelos inicializados con éxito.');
 
   return {
     carritos,
