@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const passportC = require('./config/passportConfig');
 const session = require('express-session');
-const  Sequelize  = require('sequelize');
+const Sequelize  = require('sequelize');
 const sequelize = require('./config/database');
 const initModels = require('./models/init-models'); 
 

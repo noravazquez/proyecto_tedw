@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const Usuario = require('../models/usuarios');
 
@@ -11,10 +10,8 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
     }
 
-    const [existingUser, existingEmail] = await Promise.all([
-      Usuario.findOne({ where: { usuario: req.body.usuario } }),
-      Usuario.findOne({ where: { correo: req.body.correo } }),
-    ]);
+    const existingUser = await Usuario.findOne({ where: { usuario: req.body.usuario } });
+    const existingEmail = await Usuario.findOne({ where: { correo: req.body.correo } });
 
     if (existingUser) {
       return res.status(400).json({ error: 'Este nombre de usuario ya existe registrado' });
@@ -33,11 +30,10 @@ exports.registerUser = async (req, res) => {
 
     res.json({ user });
   } catch (error) {
-    console.error(error);
+    console.error('Error en el registro de usuario:', error);
     res.status(500).json({ error: 'Error en el registro de usuario' });
   }
 };
-
 
 exports.loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -45,7 +41,7 @@ exports.loginUser = (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.status(401).json({ message: info.message });
+      return res.status(401).json({ error: 'Credenciales inválidas' });
     }
     req.logIn(user, (err) => {
       if (err) {
@@ -58,9 +54,9 @@ exports.loginUser = (req, res, next) => {
 
 exports.logoutUser = (req, res) => {
   if (req.isAuthenticated()) {
-      req.logout();
-      res.json({ message: 'Sesión cerrada exitosamente' });
+    req.logout();
+    res.json({ message: 'Sesión cerrada exitosamente' });
   } else {
-      res.status(401).json({ error: 'No hay una sesión activa para cerrar' });
+    res.status(401).json({ error: 'No hay una sesión activa para cerrar' });
   }
 };
