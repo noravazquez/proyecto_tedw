@@ -24,16 +24,43 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: 'El correo ya está registrado' });
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.contrasena, 10);
     const user = await Usuarios.create({
       usuario: req.body.usuario,
       correo: req.body.correo,
       contrasena: hashedPassword,
-    });    
-
+    });
+    
     res.json({ user });
   } catch (error) {
     console.error('Error en el registro de usuario:', error);
     res.status(500).json({ error: 'Error en el registro de usuario' });
+  }
+};
+
+
+
+exports.loginUser = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.status(401).json({ message: info.message });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      return res.json({ user });
+    });
+  })(req, res, next);
+};
+
+exports.logoutUser = (req, res) => {
+  if (req.isAuthenticated()) {
+      req.logout();
+      res.json({ message: 'Sesión cerrada exitosamente' });
+  } else {
+      res.status(401).json({ error: 'No hay una sesión activa para cerrar' });
   }
 };
