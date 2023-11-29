@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const OrdenCompra = require('./ordencompras');
 
-const MetodoPago = sequelize.define('MetodoPago', {
+class MetodoPago extends Model {}
+
+MetodoPago.init({
   id_metodo_pago: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -14,10 +15,12 @@ const MetodoPago = sequelize.define('MetodoPago', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-},{
+}, {
+  sequelize,
+  modelName: 'MetodoPago',
   tableName: 'metodopagos', 
 });
 
-MetodoPago.hasMany(OrdenCompra, { foreignKey: "id_metodo_pago"});
+MetodoPago.hasMany(OrdenCompra, { foreignKey: "id_metodo_pago" });
 
 module.exports = MetodoPago;

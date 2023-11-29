@@ -1,12 +1,13 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const Usuario = require('./usuarios');
 const Carrito = require('./carritos');
 const Direccion = require('./direccions');
 const OrdenCompra = require('./ordencompras');
 
-const Cliente = sequelize.define('Cliente', {
+class Cliente extends Model {}
+
+Cliente.init({
   id_cliente: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -33,13 +34,14 @@ const Cliente = sequelize.define('Cliente', {
     allowNull: false,
   },
 }, {
+  sequelize,
+  modelName: 'Cliente',
   tableName: 'clientes', 
 });
 
 Cliente.belongsTo(Usuario, { foreignKey: 'id_usuario', onDelete: 'CASCADE' });
-
-Cliente.hasMany(Carrito, { foreignKey: "id_cliente"});
-Cliente.hasMany(Direccion, { foreignKey: "id_cliente"});
-Cliente.hasMany(OrdenCompra, {  foreignKey: "id_cliente"});
+Cliente.hasMany(Carrito, { foreignKey: 'id_cliente' });
+Cliente.hasMany(Direccion, { foreignKey: 'id_cliente' });
+Cliente.hasMany(OrdenCompra, { foreignKey: 'id_cliente' });
 
 module.exports = Cliente;

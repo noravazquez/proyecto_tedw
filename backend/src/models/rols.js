@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const UsuarioRol = require('./usuariorols');
 
-const Rol = sequelize.define('Rol', {
+class Rol extends Model {}
+
+Rol.init({
   id_rol: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -14,10 +15,12 @@ const Rol = sequelize.define('Rol', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-},{
+}, {
+  sequelize,
+  modelName: 'Rol',
   tableName: 'rols', 
 });
 
-//Rol.hasMany(UsuarioRol, { foreignKey: "id_rol" });
+Rol.hasMany(UsuarioRol, { foreignKey: "id_rol" });
 
 module.exports = Rol;
