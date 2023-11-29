@@ -1,4 +1,5 @@
 const Carrito = require('../models/carritos');
+const Producto = require('../models/productos');
 const DetalleCarrito = require('../models/detallecarritos');
 const CuponDescuento = require('../models/cupondescuentos');
 
@@ -81,11 +82,11 @@ exports.obtenerCarrito = async (req, res) => {
 
 exports.aplicarCuponDescuento = async (req, res) => {
   try {
-    const { codigoCupon } = req.body;
+    const { codigo_unico  } = req.body;
 
     // Busca el cupón por código
     const cupon = await CuponDescuento.findOne({
-      where: { codigo_unico: codigoCupon },
+      where: { codigo_unico: codigo_unico  },
     });
 
     if (!cupon) {
