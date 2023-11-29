@@ -1,4 +1,5 @@
 const Carrito = require('../models/carritos');
+const Cliente = require('../models/clientes');
 const Producto = require('../models/productos');
 const DetalleCarrito = require('../models/detallecarritos');
 const CuponDescuento = require('../models/cupondescuentos');
