@@ -1,7 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-const UsuarioRol = require('./usuariorols');
-const Cliente = require('./clientes');
 
 class Usuario extends Model {}
 
@@ -29,8 +27,5 @@ Usuario.init({
   modelName: 'Usuario',
   tableName: 'usuarios', 
 });
-
-Usuario.hasMany(Cliente, { foreignKey: "id_usuario" });
-Usuario.hasMany(UsuarioRol, { foreignKey: "id_usuario" });
 
 module.exports = Usuario;

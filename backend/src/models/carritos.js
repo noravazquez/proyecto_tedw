@@ -1,8 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-const Cliente = require('./clientes');
-const CuponDescuento = require('./cupondescuentos');
-const DetalleCarrito = require('./detallecarritos');
+
 
 class Carrito extends Model {}
 
@@ -30,8 +28,5 @@ Carrito.init({
   tableName: 'carritos', 
 });
 
-Carrito.hasMany(DetalleCarrito, { foreignKey: 'id_carrito' });
-Carrito.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
-Carrito.belongsTo(CuponDescuento, { foreignKey: 'id_cupon_descuento', onDelete: 'CASCADE' });
 
 module.exports = Carrito;

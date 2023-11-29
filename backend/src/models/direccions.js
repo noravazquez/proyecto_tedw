@@ -1,7 +1,6 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-const Cliente = require('./clientes');
-const OrdenCompra = require('./ordencompras');
+
 
 class Direccion extends Model {}
 
@@ -42,7 +41,5 @@ Direccion.init({
   tableName: 'direccions', 
 });
 
-Direccion.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
-Direccion.hasMany(OrdenCompra, { foreignKey: "id_direccion" });
 
 module.exports = Direccion;
