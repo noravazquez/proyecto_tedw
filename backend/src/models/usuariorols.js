@@ -6,11 +6,12 @@ const Rol = require('./rols');
 
 const UsuarioRol = sequelize.define('UsuarioRol', {
   id_rol: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   id_usuario: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER
+,
     allowNull: false,
   },
 },{
