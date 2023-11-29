@@ -26,6 +26,6 @@ const CuponDescuento = sequelize.define('CuponDescuento', {
   tableName: 'cupondescuentos', 
 });
 
-cupondescuentos.hasMany(Carrito, { foreignKey: "id_cupon_descuento"});
+CuponDescuento.hasMany(Carrito, { foreignKey: "id_cupon_descuento"});
 
 module.exports = CuponDescuento;
