@@ -9,11 +9,22 @@ exports.agregarAlCarrito = async (req, res) => {
     const { idProducto } = req.params; 
     const { cantidad } = req.body;
 
-    if (!req.user || !req.user.cliente || !req.user.cliente.id_carrito) {
-      return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
+    
+    if (!req.user || !req.user.id_usuario) {
+      return res.status(400).json({ error: 'Usuario no autenticado' });
     }
 
-    const idCarrito = req.user.cliente.id_carrito;
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+    });
+
+    const carrito = await Carrito.findOne({
+      where: { id_cliente: cliente.id_cliente },
+      include: [{
+        model: DetalleCarrito,
+        include: [Producto],
+      }],
+    });
 
     // Verificar si el producto ya está en el carrito del usuario
     let detalleCarrito = await DetalleCarrito.findOne({
@@ -34,14 +45,6 @@ exports.agregarAlCarrito = async (req, res) => {
         cantidad: cantidad,
       });
     }
-
-    //Obtengo carrito y detalles
-    const carrito = await Carrito.findByPk(req.user.cliente.id_carrito, {
-      include: [{
-        model: DetalleCarrito,
-        include: [Producto],
-      }],
-    });
 
     //Devuelvo carrito
     res.json({ message: 'Producto agregado al carrito de compra', carrito });
@@ -106,25 +109,22 @@ exports.aplicarCuponDescuento = async (req, res) => {
       return res.status(404).json({ error: 'Cupón no encontrado' });
     }
 
-    if (!req.user ) {
-      return res.status(400).json({ error: 'Usuario no autenticado ' });
+    if (!req.user || !req.user.id_usuario) {
+      return res.status(400).json({ error: 'Usuario no autenticado' });
     }
 
-    if (!req.user.cliente ) {
-      return res.status(400).json({ error: 'Cliente no encontrado' });
-    }
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+    });
 
-    if ( !req.user.cliente.id_carrito) {
-      return res.status(400).json({ error: 'Carrito no encontrado' });
-    }
-
-    const idCarrito = req.user.cliente.id_carrito;
-    const carrito = await Carrito.findByPk(idCarrito, {
+    const carrito = await Carrito.findOne({
+      where: { id_cliente: cliente.id_cliente },
       include: [{
         model: DetalleCarrito,
         include: [Producto],
       }],
     });
+
 
     if (!carrito) {
       console.error('Carrito no encontrado');
