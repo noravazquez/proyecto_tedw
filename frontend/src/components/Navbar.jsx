@@ -44,13 +44,13 @@ const Navbar = ({ toggleSidebar }) => {
                                 <div className="p-2">
                                     <a
                                         href="/login"
-                                        className="block px-4 py-2 text-sm text-Blue2 font-primary rounded-lg hover:bg-gray-50 hover:text-gray-700"
+                                        className="block px-4 py-1 text-sm text-Blue2 font-primary rounded-lg hover:bg-gray-50 hover:text-gray-700"
                                     >
                                         LOGIN
                                     </a>
                                     <a
                                         href="/register"
-                                        className="block px-4 py-2 text-sm text-Blue2 font-primary rounded-lg hover:bg-gray-50 hover:text-gray-700"
+                                        className="block px-4 py-1 text-sm text-Blue2 font-primary rounded-lg hover:bg-gray-50 hover:text-gray-700"
                                     >
                                         REGISTER
                                     </a>
