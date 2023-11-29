@@ -1,5 +1,5 @@
 import React from 'react'
-import ProductCard from '../../components/ProductCard'
+import ProductCard from '../../../components/ProductCard'
 import { TfiLayoutGrid4Alt } from "react-icons/tfi";
 import { LuGrip, LuGripHorizontal, LuGripVertical } from "react-icons/lu";
 

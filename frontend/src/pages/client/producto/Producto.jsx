@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import ImagenProducto from './ImagenProducto'
 import DetalleProducto from './DetalleProducto'
-import BreadCrumb from '../../components/BreadCrumb'
+import BreadCrumb from '../../../components/BreadCrumb'
 
 const Producto = () => {
   return (

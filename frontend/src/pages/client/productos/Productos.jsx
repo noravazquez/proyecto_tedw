@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import BreadCrumb from '../../components/BreadCrumb'
+import BreadCrumb from '../../../components/BreadCrumb'
 import FilterCards from './FilterCards'
 import ListaProductos from './ListaProductos'
 

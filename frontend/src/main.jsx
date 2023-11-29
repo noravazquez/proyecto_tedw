@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from './pages/home/Home.jsx';
+import Home from './pages/client/home/Home.jsx';
 import Search from './components/Search.jsx';
-import Login from './pages/login/Login.jsx';
-import Register from './pages/register/Register.jsx';
-import Cart from './pages/cart/Cart.jsx';
-import Productos from './pages/productos/Productos.jsx';
-import Producto from './pages/Producto/Producto.jsx';
-import About from './pages/about/About.jsx';
-import Contact from './pages/contact/Contact.jsx';
-import QA from './pages/qa/QA.jsx';
+import Login from './pages/client/login/Login.jsx';
+import Register from './pages/client/register/Register.jsx';
+import Cart from './pages/client/cart/Cart.jsx';
+import Productos from './pages/client/productos/Productos.jsx';
+import Producto from './pages/client/Producto/Producto.jsx';
+import About from './pages/client/about/About.jsx';
+import Contact from './pages/client/contact/Contact.jsx';
+import QA from './pages/client/qa/QA.jsx';
 
 const router = createBrowserRouter([
   {
