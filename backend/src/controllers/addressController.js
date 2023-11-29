@@ -35,19 +35,24 @@ exports.actualizarDirecciones = async (req, res) => {
     }
 
     console.log('Cliente encontrado');
-    const direccionId = req.body.id_direccion; 
+
+    const direccionId = req.body.Direccions.id_direccion;
+
     const direccion = cliente.Direccions.find(d => d.id_direccion === parseInt(direccionId));
+
     if (!direccion) {
       return res.status(404).json({ message: 'Dirección no encontrada para el cliente' });
     }
-    await direccion.update(req.body.Direccion);
+
+    await direccion.update(req.body.Direccions);
+
     res.json({ message: 'Dirección actualizada correctamente' });
+
   } catch (error) {
     console.error('Error al actualizar direcciones:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-
 
 
 
