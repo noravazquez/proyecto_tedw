@@ -4,10 +4,10 @@ const { getUserInfo, getUserOrders, generateOrderChart,updateClientInfo,updateUs
 
 const router = express.Router();
 
-router.get('/profile', ensureAuthenticated, getUserInfo);
-router.get('/orders', ensureAuthenticated, getUserOrders);
-router.get('/order-chart', ensureAuthenticated, generateOrderChart);
-router.patch('/info-client', ensureAuthenticated, updateClientInfo);
-router.patch('/info-user', ensureAuthenticated, updateUserInfo); 
+router.get('/profile',  getUserInfo);
+router.get('/orders',  getUserOrders);
+router.get('/order-chart',  generateOrderChart);
+router.patch('/info-client',  updateClientInfo);
+router.patch('/info-user',  updateUserInfo); 
 
 module.exports = router;

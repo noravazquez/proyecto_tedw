@@ -23,7 +23,7 @@ router.post('/register', async (req, res) => {
     }
   });
   
-router.get('/logout', ensureAuthenticated,  logoutUser);
+router.get('/logout',  logoutUser);
 
 
 module.exports = router;
