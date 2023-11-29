@@ -1,7 +1,8 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 
 module.exports = function(sequelize) {
-  return sequelize.define('Usuario', {
+  class Usuario extends Model {}
+  Usuario.init({
     id_usuario: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -22,6 +23,7 @@ module.exports = function(sequelize) {
     }
   }, {
     sequelize,
+    modelName: 'Usuario',  // Agregamos esta línea para especificar el nombre del modelo
     tableName: 'usuarios',
     schema: 'public',
     timestamps: false,
@@ -35,4 +37,7 @@ module.exports = function(sequelize) {
       },
     ]
   });
+
+  console.log('Métodos en Usuario:', Object.keys(Usuario.prototype));
+  return Usuario;
 };
