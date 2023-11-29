@@ -35,7 +35,7 @@ exports.actualizarDirecciones = async (req, res) => {
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
-
+    console.log('Cliente encontrado');
     await cliente.Direccion.update(req.body.Direccion);
 
     res.json({ message: 'Direccion actualizada correctamente' });
@@ -48,7 +48,7 @@ exports.actualizarDirecciones = async (req, res) => {
 exports.agregarDireccion = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_cliente: req.user.id_cliente },
+      where: { id_usuario: req.user.id_usuario },
     });
 
     if (!cliente) {
@@ -61,7 +61,7 @@ exports.agregarDireccion = async (req, res) => {
       estado: req.body.estado,
       codigo_postal: req.body.codigo_postal,
       pais: req.body.pais,
-      id_cliente: cliente.id_cliente,
+      id_cliente: req.body.id_cliente,
     });
 
     res.json({ message: 'Dirección agregada correctamente', nuevaDireccion });
