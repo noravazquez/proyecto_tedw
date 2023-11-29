@@ -21,7 +21,7 @@ Carrito.init({
   },
   id_cupon_descuento: { 
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 }, {
   sequelize,
