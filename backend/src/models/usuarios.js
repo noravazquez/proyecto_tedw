@@ -1,43 +1,33 @@
-const { DataTypes, Model } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-module.exports = function(sequelize) {
-  class Usuario extends Model {}
-  Usuario.init({
-    id_usuario: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    usuario: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    correo: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    contrasena: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    modelName: 'Usuario',  // Agregamos esta línea para especificar el nombre del modelo
-    tableName: 'usuarios',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "usuarios_pkey",
-        unique: true,
-        fields: [
-          { name: "id_usuario" },
-        ]
-      },
-    ]
-  });
+const UsuarioRol = require('./usuariorols');
+const Cliente = require('./clientes');
 
-  console.log('Métodos en Usuario:', Object.keys(Usuario.prototype));
-  return Usuario;
-};
+const Usuario = sequelize.define('Usuario', {
+  id_usuario: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  usuario: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  correo: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  contrasena: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+},{
+  tableName: 'usuarios', 
+});
+
+Usuario.hasMany(Cliente, { foreignKey: "id_usuario"});
+Usuario.hasMany(UsuarioRol, { foreignKey: "id_usuario"});
+
+module.exports = Usuario;

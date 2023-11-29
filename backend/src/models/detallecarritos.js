@@ -1,45 +1,35 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('detallecarritos', {
-    id_detalle_carrito: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    cantidad: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    id_carrito: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'carritos',
-        key: 'id_carrito'
-      }
-    },
-    id_producto: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'productos',
-        key: 'id_producto'
-      }
-    }
-  }, {
-    sequelize,
-    tableName: 'detallecarritos',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "detallecarritos_pkey",
-        unique: true,
-        fields: [
-          { name: "id_detalle_carrito" },
-        ]
-      },
-    ]
-  });
-};
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+
+const Carrito = require('./carritos');
+const Producto = require('./productos');
+const OrdenCompra = require('./ordencompras');
+
+const DetalleCarrito = sequelize.define('DetalleCarrito', {
+  id_detalle_carrito: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  cantidad: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  id_carrito: { 
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  id_producto: { 
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'detallecarritos', 
+});
+
+DetalleCarrito.belongsTo(Carrito, { foreignKey: 'id_carrito', onDelete: 'CASCADE' });
+DetalleCarrito.belongsTo(Producto, { foreignKey: 'id_producto', onDelete: 'CASCADE' });
+DetalleCarrito.hasMany(OrdenCompra, { foreignKey: "id_detalle_carrito"});
+
+module.exports = DetalleCarrito;

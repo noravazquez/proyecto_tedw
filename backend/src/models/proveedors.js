@@ -1,37 +1,31 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('proveedors', {
-    id_proveedor: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    proveedor: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    telefono: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    correo_electronico: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'proveedors',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "proveedors_pkey",
-        unique: true,
-        fields: [
-          { name: "id_proveedor" },
-        ]
-      },
-    ]
-  });
-};
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+
+const Producto = require('./productos');
+
+const Proveedor = sequelize.define('Proveedor', {
+  id_proveedor: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  proveedor: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  telefono: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  correo_electronico: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+},{
+  tableName: 'proveedors', 
+});
+
+Proveedor.hasMany(Producto, { foreignKey: "id_proveedor"});
+
+module.exports = Proveedor;
