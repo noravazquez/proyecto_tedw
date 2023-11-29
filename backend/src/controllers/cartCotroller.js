@@ -8,14 +8,14 @@ exports.agregarAlCarrito = async (req, res) => {
     const { idProducto } = req.params; 
     const { cantidad } = req.body;
 
-    if (!req.user || !req.user.id_carrito) {
+    if (!req.user || !req.user.cliente || !req.user.cliente.id_carrito) {
       return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
     }
 
     // Verificar si el producto ya está en el carrito del usuario
     let detalleCarrito = await DetalleCarrito.findOne({
       where: {
-        id_carrito: req.user.id_carrito, 
+        id_carrito: req.user.cliente.id_carrito, 
         id_producto: idProducto,
       },
     });
@@ -48,9 +48,14 @@ exports.agregarAlCarrito = async (req, res) => {
   }
 };
 
+
 exports.obtenerCarrito = async (req, res) => {
   try {
-    const carrito = await Carrito.findByPk(req.user.id_carrito, {
+    if (!req.user || !req.user.cliente || !req.user.cliente.id_carrito) {
+      return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
+    }
+
+    const carrito = await Carrito.findByPk(req.user.cliente.id_carrito, {
       include: [{
         model: DetalleCarrito,
         include: [Producto],
@@ -80,21 +85,25 @@ exports.obtenerCarrito = async (req, res) => {
   }
 };
 
+
 exports.aplicarCuponDescuento = async (req, res) => {
   try {
-    const { codigo_unico  } = req.body;
+    const { codigo_unico } = req.body;
 
     // Busca el cupón por código
     const cupon = await CuponDescuento.findOne({
-      where: { codigo_unico: codigo_unico  },
+      where: { codigo_unico: codigo_unico },
     });
 
     if (!cupon) {
       return res.status(404).json({ error: 'Cupón no encontrado' });
     }
 
-    // Obtén el carrito del usuario
-    const carrito = await Carrito.findByPk(req.user.id_carrito, {
+    if (!req.user || !req.user.cliente || !req.user.cliente.id_carrito) {
+      return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
+    }
+
+    const carrito = await Carrito.findByPk(req.user.cliente.id_carrito, {
       include: [{
         model: DetalleCarrito,
         include: [Producto],
