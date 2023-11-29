@@ -6,6 +6,6 @@ const { obtenerDirecciones, actualizarDirecciones, agregarDireccion, eliminarDir
 router.get('/direcciones',  obtenerDirecciones);
 router.post('/agregar-direccion',  agregarDireccion );
 router.patch('/actualizar-direccion',  actualizarDirecciones);
-router.delete('direcciones/:direccionId', eliminarDireccion);
+router.delete('direcciones/:id_direccion', eliminarDireccion);
 
 module.exports = router;
