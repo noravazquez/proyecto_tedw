@@ -65,7 +65,7 @@ exports.eliminarDireccion = async (req, res) => {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
 
-    const direccionId = req.params.direccionId; 
+    const direccionId = req.params.id_direccion; 
 
     const direccion = cliente.Direccions.find(d => d.id_direccion === parseInt(direccionId));
 
