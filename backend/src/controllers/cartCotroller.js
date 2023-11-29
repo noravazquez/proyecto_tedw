@@ -12,10 +12,12 @@ exports.agregarAlCarrito = async (req, res) => {
       return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
     }
 
+    const idCarrito = req.user.cliente.id_carrito;
+
     // Verificar si el producto ya está en el carrito del usuario
     let detalleCarrito = await DetalleCarrito.findOne({
       where: {
-        id_carrito: req.user.cliente.id_carrito, 
+        id_carrito: idCarrito, 
         id_producto: idProducto,
       },
     });
@@ -26,7 +28,7 @@ exports.agregarAlCarrito = async (req, res) => {
       await detalleCarrito.save();
     } else {
       detalleCarrito = await DetalleCarrito.create({
-        id_carrito: req.user.id_carrito,
+        id_carrito: idCarrito,
         id_producto: idProducto,
         cantidad: cantidad,
       });
@@ -51,11 +53,16 @@ exports.agregarAlCarrito = async (req, res) => {
 
 exports.obtenerCarrito = async (req, res) => {
   try {
-    if (!req.user || !req.user.cliente || !req.user.cliente.id_carrito) {
-      return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
+    if (!req.user || !req.user.id_usuario) {
+      return res.status(400).json({ error: 'Usuario no autenticado o cliente no encontrado' });
     }
 
-    const carrito = await Carrito.findByPk(req.user.cliente.id_carrito, {
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+    });
+
+    const carrito = await Carrito.findOne({
+      where: { id_cliente: cliente.id_cliente },
       include: [{
         model: DetalleCarrito,
         include: [Producto],
@@ -89,8 +96,6 @@ exports.obtenerCarrito = async (req, res) => {
 exports.aplicarCuponDescuento = async (req, res) => {
   try {
     const { codigo_unico } = req.body;
-
-    // Busca el cupón por código
     const cupon = await CuponDescuento.findOne({
       where: { codigo_unico: codigo_unico },
     });
@@ -103,7 +108,8 @@ exports.aplicarCuponDescuento = async (req, res) => {
       return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
     }
 
-    const carrito = await Carrito.findByPk(req.user.cliente.id_carrito, {
+    const idCarrito = req.user.cliente.id_carrito;
+    const carrito = await Carrito.findByPk(idCarrito, {
       include: [{
         model: DetalleCarrito,
         include: [Producto],
@@ -115,13 +121,11 @@ exports.aplicarCuponDescuento = async (req, res) => {
       return res.status(404).json({ error: 'Carrito no encontrado' });
     }
 
-    // Aplica el descuento del cupón al total del carrito 
+ 
     const descuentoPorcentaje = cupon.descuento / 100;
     const descuentoTotal = carrito.total * descuentoPorcentaje;
     const totalCarritoConDescuento = carrito.total - descuentoTotal;
-
-    // Actualiza el total
-    await carrito.update({ total: totalCarritoConDescuento });
+    await carrito.update({ total: totalCarritoConDescuento, id_cupon_descuento: cupon.id_cupon_descuento });
 
     res.json({ message: 'Cupón aplicado correctamente', carrito });
   } catch (error) {
