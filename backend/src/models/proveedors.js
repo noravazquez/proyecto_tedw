@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const Producto = require('./productos');
 
-const Proveedor = sequelize.define('Proveedor', {
+class Proveedor extends Model {}
+
+Proveedor.init({
   id_proveedor: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -22,7 +23,9 @@ const Proveedor = sequelize.define('Proveedor', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-},{
+}, {
+  sequelize,
+  modelName: 'Proveedor',
   tableName: 'proveedors', 
 });
 

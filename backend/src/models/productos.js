@@ -1,11 +1,12 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const Categoria = require('./categorias');
 const Proveedor = require('./proveedors');
 const DetalleCarrito = require('./detallecarritos');
 
-const Producto = sequelize.define('Producto', {
+class Producto extends Model {}
+
+Producto.init({
   id_producto: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -39,7 +40,9 @@ const Producto = sequelize.define('Producto', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-},{
+}, {
+  sequelize,
+  modelName: 'Producto',
   tableName: 'productos', 
 });
 

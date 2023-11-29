@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const Carrito = require('./carritos');
 
-const CuponDescuento = sequelize.define('CuponDescuento', {
+class CuponDescuento extends Model {}
+
+CuponDescuento.init({
   id_cupon_descuento: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -23,9 +24,10 @@ const CuponDescuento = sequelize.define('CuponDescuento', {
     allowNull: false,
   },
 }, {
+  sequelize,
   tableName: 'cupondescuentos', 
 });
 
-CuponDescuento.hasMany(Carrito, { foreignKey: "id_cupon_descuento"});
+CuponDescuento.hasMany(Carrito, { foreignKey: 'id_cupon_descuento' });
 
 module.exports = CuponDescuento;

@@ -1,10 +1,11 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const Usuario = require('./usuarios');
 const Rol = require('./rols');
 
-const UsuarioRol = sequelize.define('UsuarioRol', {
+class UsuarioRol extends Model {}
+
+UsuarioRol.init({
   id_rol: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -13,11 +14,13 @@ const UsuarioRol = sequelize.define('UsuarioRol', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-},{
+}, {
+  sequelize,
+  modelName: 'UsuarioRol',
   tableName: 'usuariorols', 
 });
 
-//UsuarioRol.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-//UsuarioRol.belongsTo(Rol, { foreignKey: 'id_rol' });
+UsuarioRol.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+UsuarioRol.belongsTo(Rol, { foreignKey: 'id_rol' });
 
 module.exports = UsuarioRol;

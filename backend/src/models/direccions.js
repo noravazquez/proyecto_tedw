@@ -1,10 +1,11 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-
 const Cliente = require('./clientes');
 const OrdenCompra = require('./ordencompras');
 
-const Direccion = sequelize.define('Direccion', {
+class Direccion extends Model {}
+
+Direccion.init({
   id_direccion: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -35,11 +36,13 @@ const Direccion = sequelize.define('Direccion', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-},{
+}, {
+  sequelize,
+  modelName: 'Direccion',
   tableName: 'direccions', 
 });
 
 Direccion.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
-Direccion.hasMany(OrdenCompra, { foreignKey: "id_direccion"});
+Direccion.hasMany(OrdenCompra, { foreignKey: "id_direccion" });
 
 module.exports = Direccion;
