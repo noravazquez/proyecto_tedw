@@ -1,6 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-const OrdenCompra = require('./ordencompras');
 
 class MetodoPago extends Model {}
 
@@ -21,6 +20,5 @@ MetodoPago.init({
   tableName: 'metodopagos', 
 });
 
-MetodoPago.hasMany(OrdenCompra, { foreignKey: "id_metodo_pago" });
 
 module.exports = MetodoPago;

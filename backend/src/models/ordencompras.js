@@ -1,9 +1,5 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/database');
-const Cliente = require('./clientes');
-const DetalleCarrito = require('./detallecarritos');
-const Direccion = require('./direccions');
-const MetodoPago = require('./metodopagos');
 
 class OrdenCompra extends Model {}
 
@@ -45,9 +41,5 @@ OrdenCompra.init({
   tableName: 'ordencompras', 
 });
 
-OrdenCompra.belongsTo(Cliente, { foreignKey: 'id_cliente', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(DetalleCarrito, { foreignKey: 'id_detalle_carrito', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(MetodoPago, { foreignKey: 'id_metodo_pago', onDelete: 'CASCADE' });
-OrdenCompra.belongsTo(Direccion, { foreignKey: 'id_direccion_envio', onDelete: 'CASCADE' });
 
 module.exports = OrdenCompra;

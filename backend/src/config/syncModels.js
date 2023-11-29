@@ -1,0 +1,47 @@
+const Carrito = require("../models/carritos");
+const Categoria = require("../models/categorias");
+const Cliente = require("../models/clientes");
+const CuponDescuento = require("../models/cupondescuentos");
+const DetalleCarrito = require("../models/detallecarritos");
+const Direccion = require("../models/direccions");
+const MetodoPago = require("../models/metodopagos");
+const OrdenCompra = require("../models/ordencompras");
+const Producto = require("../models/productos");
+const Proveedor = require("../models/proveedors");
+const Rol = require("../models/rols");
+const UsuarioRol = require("../models/usuariorols");
+const Usuario = require("../models/usuarios");
+
+const initModels = () => {
+    DetalleCarrito.belongsTo(Carrito, { foreignKey: "id_carrito"});
+    Carrito.hasMany(DetalleCarrito, { foreignKey: "id_carrito"});
+    Producto.belongsTo(Categoria, {  foreignKey: "id_categoria"});
+    Categoria.hasMany(Producto, {  foreignKey: "id_categoria"});
+    Carrito.belongsTo(Cliente, {  foreignKey: "id_cliente"});
+    Cliente.hasMany(Carrito, {  foreignKey: "id_cliente"});
+    Direccion.belongsTo(Cliente, { foreignKey: "id_cliente"});
+    Cliente.hasMany(Direccion, {  foreignKey: "id_cliente"});
+    OrdenCompra.belongsTo(Cliente, {  foreignKey: "id_cliente"});
+    Cliente.hasMany(OrdenCompra, {foreignKey: "id_cliente"});
+    Carrito.belongsTo(CuponDescuento, {  foreignKey: "id_cupon_descuento"});
+    CuponDescuento.hasMany(Carrito, {  foreignKey: "id_cupon_descuento"});
+    OrdenCompra.belongsTo(DetalleCarrito, {  foreignKey: "id_detalle_carrito"});
+    DetalleCarrito.hasMany(OrdenCompra, {  foreignKey: "id_detalle_carrito"});
+    OrdenCompra.belongsTo(Direccion, { foreignKey: "id_direccion"});
+    Direccion.hasMany(OrdenCompra, {  foreignKey: "id_direccion"});
+    OrdenCompra.belongsTo(MetodoPago, {  foreignKey: "id_metodo_pago"});
+    MetodoPago.hasMany(OrdenCompra, {  foreignKey: "id_metodo_pago"});
+    DetalleCarrito.belongsTo(Producto, {  foreignKey: "id_producto"});
+    Producto.hasMany(DetalleCarrito, {  foreignKey: "id_producto"});
+    Producto.belongsTo(Proveedor, {  foreignKey: "id_proveedor"});
+    Proveedor.hasMany(Producto, {  foreignKey: "id_proveedor"});
+    UsuarioRol.belongsTo(Rol, { foreignKey: "id_rol"});
+    Rol.hasMany(UsuarioRol, {  foreignKey: "id_rol"});
+    Cliente.belongsTo(Usuario, {  foreignKey: "id_usuario"});
+    Usuario.hasMany(Cliente, {  foreignKey: "id_usuario"});
+    UsuarioRol.belongsTo(Usuario, {  foreignKey: "id_usuario"});
+    Usuario.hasMany(UsuarioRol, {  foreignKey: "id_usuario"});
+    console.log('Modelos inicializados con éxito.');
+};
+
+module.exports = initModels;
