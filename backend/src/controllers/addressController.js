@@ -26,25 +26,30 @@ exports.obtenerDirecciones = async (req, res) => {
 exports.actualizarDirecciones = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario  },
-      include: [
-        { model: Direccion },
-      ],
+      where: { id_usuario: req.user.id_usuario },
+      include: [{ model: Direccion }],
     });
 
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
-    console.log('Cliente encontrado');
-    await cliente.Direccion.update(req.body.Direccion);
 
-    res.json({ message: 'Direccion actualizada correctamente' });
-    
+    console.log('Cliente encontrado');
+    const direccionId = req.body.id_direccion; 
+    const direccion = cliente.Direccions.find(d => d.id_direccion === parseInt(direccionId));
+    if (!direccion) {
+      return res.status(404).json({ message: 'Dirección no encontrada para el cliente' });
+    }
+    await direccion.update(req.body.Direccion);
+    res.json({ message: 'Dirección actualizada correctamente' });
   } catch (error) {
     console.error('Error al actualizar direcciones:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+
+
 
 exports.agregarDireccion = async (req, res) => {
   try {
