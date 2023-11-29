@@ -1,7 +1,6 @@
-// authController.js
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const Usuarios = require('../models/usuarios');
+const Usuario = require('../models/usuarios');
 
 exports.registerUser = async (req, res) => {
   try {
@@ -12,8 +11,8 @@ exports.registerUser = async (req, res) => {
     }
 
     const [existingUser, existingEmail] = await Promise.all([
-      Usuarios.findOne({ where: { usuario: req.body.usuario } }),
-      Usuarios.findOne({ where: { correo: req.body.correo } }),
+      Usuario.findOne({ where: { usuario: req.body.usuario } }),
+      Usuario.findOne({ where: { correo: req.body.correo } }),
     ]);
 
     if (existingUser) {
@@ -23,8 +22,9 @@ exports.registerUser = async (req, res) => {
     if (existingEmail) {
       return res.status(400).json({ error: 'El correo ya está registrado' });
     }
+    const hashedPassword = await bcrypt.hash(req.body.contrasena, 10);
 
-    const user = await Usuarios.create({
+    const user = await Usuario.create({
       usuario: req.body.usuario,
       correo: req.body.correo,
       contrasena: hashedPassword,
@@ -36,8 +36,6 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ error: 'Error en el registro de usuario' });
   }
 };
-
-
 
 exports.loginUser = (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {

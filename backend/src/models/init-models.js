@@ -1,4 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
+
 var _carritos = require("./carritos");
 var _categorias = require("./categorias");
 var _clientes = require("./clientes");
