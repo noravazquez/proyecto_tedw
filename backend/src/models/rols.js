@@ -18,6 +18,6 @@ const Rol = sequelize.define('Rol', {
   tableName: 'rols', 
 });
 
-Rol.hasMany(UsuarioRol, { foreignKey: "id_rol" });
+//Rol.hasMany(UsuarioRol, { foreignKey: "id_rol" });
 
 module.exports = Rol;
