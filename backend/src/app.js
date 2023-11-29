@@ -1,11 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const passport = require('passport');
 const passportC = require('./config/passportConfig');
 const session = require('express-session');
+
 const Sequelize  = require('sequelize');
 const sequelize = require('./config/database');
-const initModels = require('./models/init-models'); 
+
+const Carritos = require("./models/carritos");
+const Categorias = require("./models/categorias");
+const Clientes = require("./models/clientes");
+const Cupondescuentos = require("./models/cupondescuentos");
+const Detallecarritos = require("./models/detallecarritos");
+const Direccions = require("./models/direccions");
+const Metodopagos = require("./models/metodopagos");
+const Ordencompras = require("./models/ordencompras");
+const Productos = require("./models/productos");
+const Proveedors = require("./models/proveedors");
+const Rols = require("./models/rols");
+const Usuariorols = require("./models/usuariorols");
+const Usuarios = require("./models/usuarios");
 
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
@@ -23,18 +38,31 @@ const PORT = process.env.PORT || 3003;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Init Sequelize
+// Inicialización de Sequelize y sincronización de modelos
 sequelize
   .authenticate()
   .then(() => {
     console.log('Conexión a la base de datos establecida correctamente.');
-    //sequelize.sync({ logging: console.log })
-    return sequelize.sync(); // Sincronizar modelos con la base de datos
+    return sequelize.sync();
   })
   .then(() => {
     console.log('Modelos sincronizados con la base de datos.');
-    const models = initModels(sequelize);  // Inicializa los modelos
-    console.log(models);
+
+    console.log(Carritos);
+    console.log(Categorias);
+    console.log(Clientes);
+    console.log(Cupondescuentos);
+    console.log(Detallecarritos);
+    console.log(Direccions);
+    console.log(Metodopagos);
+    console.log(Ordencompras);
+    console.log(Productos);
+    console.log(Proveedors);
+    console.log(Rols);
+    console.log(Usuariorols);
+    console.log(Usuarios);
+
+    //console.log(models);
   })
   .catch((error) => {
     console.error('Error al conectar con la base de datos:', error);
