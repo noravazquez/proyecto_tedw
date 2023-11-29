@@ -10,8 +10,7 @@ const UsuarioRol = sequelize.define('UsuarioRol', {
     allowNull: false,
   },
   id_usuario: {
-    type: DataTypes.INTEGER
-,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 },{
