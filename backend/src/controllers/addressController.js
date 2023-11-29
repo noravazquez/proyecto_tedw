@@ -5,9 +5,9 @@ const Direccion = require('../models/direccions');
 exports.obtenerDirecciones = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_cliente: req.user.id_cliente },
+      where: { id_usuario: req.user.id_usuario },
       include: [
-        { model: Direccion, as: 'Direccion' },
+        { model: Direccion },
       ],
     });
 
@@ -26,9 +26,9 @@ exports.obtenerDirecciones = async (req, res) => {
 exports.actualizarDirecciones = async (req, res) => {
   try {
     const cliente = await Cliente.findOne({
-      where: { id_cliente: req.user.id_cliente },
+      where: { id_usuario: req.user.id_usuario  },
       include: [
-        { model: Direccion, as: 'Direccion' },
+        { model: Direccion },
       ],
     });
 
@@ -39,6 +39,7 @@ exports.actualizarDirecciones = async (req, res) => {
     await cliente.Direccion.update(req.body.Direccion);
 
     res.json({ message: 'Direccion actualizada correctamente' });
+    
   } catch (error) {
     console.error('Error al actualizar direcciones:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
