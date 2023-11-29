@@ -36,7 +36,7 @@ exports.agregarAlCarrito = async (req, res) => {
     }
 
     //Obtengo carrito y detalles
-    const carrito = await Carrito.findByPk(req.user.id_carrito, {
+    const carrito = await Carrito.findByPk(req.user.cliente.id_carrito, {
       include: [{
         model: DetalleCarrito,
         include: [Producto],
@@ -55,7 +55,7 @@ exports.agregarAlCarrito = async (req, res) => {
 exports.obtenerCarrito = async (req, res) => {
   try {
     if (!req.user || !req.user.id_usuario) {
-      return res.status(400).json({ error: 'Usuario no autenticado o cliente no encontrado' });
+      return res.status(400).json({ error: 'Usuario no autenticado' });
     }
 
     const cliente = await Cliente.findOne({
@@ -97,6 +97,7 @@ exports.obtenerCarrito = async (req, res) => {
 exports.aplicarCuponDescuento = async (req, res) => {
   try {
     const { codigo_unico } = req.body;
+
     const cupon = await CuponDescuento.findOne({
       where: { codigo_unico: codigo_unico },
     });
@@ -105,8 +106,16 @@ exports.aplicarCuponDescuento = async (req, res) => {
       return res.status(404).json({ error: 'Cupón no encontrado' });
     }
 
-    if (!req.user || !req.user.cliente || !req.user.cliente.id_carrito) {
-      return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
+    if (!req.user ) {
+      return res.status(400).json({ error: 'Usuario no autenticado ' });
+    }
+
+    if (!req.user.cliente ) {
+      return res.status(400).json({ error: 'Cliente no encontrado' });
+    }
+
+    if ( !req.user.cliente.id_carrito) {
+      return res.status(400).json({ error: 'Carrito no encontrado' });
     }
 
     const idCarrito = req.user.cliente.id_carrito;
@@ -122,11 +131,16 @@ exports.aplicarCuponDescuento = async (req, res) => {
       return res.status(404).json({ error: 'Carrito no encontrado' });
     }
 
- 
+    // Aplica el descuento del cupón al total del carrito 
     const descuentoPorcentaje = cupon.descuento / 100;
     const descuentoTotal = carrito.total * descuentoPorcentaje;
     const totalCarritoConDescuento = carrito.total - descuentoTotal;
-    await carrito.update({ total: totalCarritoConDescuento, id_cupon_descuento: cupon.id_cupon_descuento });
+
+    // Actualiza el total y el id_cupon_descuento
+    await carrito.update({
+      total: totalCarritoConDescuento,
+      id_cupon_descuento: cupon.id_cupon_descuento,
+    });
 
     res.json({ message: 'Cupón aplicado correctamente', carrito });
   } catch (error) {
