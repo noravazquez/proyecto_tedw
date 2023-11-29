@@ -54,6 +54,35 @@ exports.actualizarDirecciones = async (req, res) => {
   }
 };
 
+exports.eliminarDireccion = async (req, res) => {
+  try {
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+      include: [{ model: Direccion }],
+    });
+
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente no encontrado' });
+    }
+
+    const direccionId = req.params.direccionId; 
+
+    const direccion = cliente.Direccions.find(d => d.id_direccion === parseInt(direccionId));
+
+    if (!direccion) {
+      return res.status(404).json({ message: 'Dirección no encontrada para el cliente' });
+    }
+
+    await direccion.destroy();
+
+    res.json({ message: 'Dirección eliminada correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar dirección:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+
 
 
 exports.agregarDireccion = async (req, res) => {
