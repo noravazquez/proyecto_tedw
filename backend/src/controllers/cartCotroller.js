@@ -7,6 +7,10 @@ exports.agregarAlCarrito = async (req, res) => {
     const { idProducto } = req.params; 
     const { cantidad } = req.body;
 
+    if (!req.user || !req.user.id_carrito) {
+      return res.status(400).json({ error: 'Usuario no autenticado o carrito no encontrado' });
+    }
+
     // Verificar si el producto ya está en el carrito del usuario
     let detalleCarrito = await DetalleCarrito.findOne({
       where: {
