@@ -1,29 +1,23 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('metodopagos', {
-    id_metodo_pago: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    metodo_pago: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'metodopagos',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "metodopagos_pkey",
-        unique: true,
-        fields: [
-          { name: "id_metodo_pago" },
-        ]
-      },
-    ]
-  });
-};
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+
+const OrdenCompra = require('./ordencompras');
+
+const MetodoPago = sequelize.define('MetodoPago', {
+  id_metodo_pago: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  metodo_pago: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+},{
+  tableName: 'metodopagos', 
+});
+
+MetodoPago.hasMany(OrdenCompra, { foreignKey: "id_metodo_pago"});
+
+module.exports = MetodoPago;

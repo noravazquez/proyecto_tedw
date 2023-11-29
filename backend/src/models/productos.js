@@ -1,61 +1,50 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('productos', {
-    id_producto: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    producto: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    descripcion: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    precio: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
-    },
-    stock: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    imagenes: {
-      type: DataTypes.JSON,
-      allowNull: true
-    },
-    id_categoria: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'categorias',
-        key: 'id_categoria'
-      }
-    },
-    id_proveedor: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'proveedors',
-        key: 'id_proveedor'
-      }
-    }
-  }, {
-    sequelize,
-    tableName: 'productos',
-    schema: 'public',
-    timestamps: false,
-    indexes: [
-      {
-        name: "productos_pkey",
-        unique: true,
-        fields: [
-          { name: "id_producto" },
-        ]
-      },
-    ]
-  });
-};
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
+
+const Categoria = require('./categorias');
+const Proveedor = require('./proveedors');
+const DetalleCarrito = require('./detallecarritos');
+
+const Producto = sequelize.define('Producto', {
+  id_producto: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  producto: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  descripcion: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  precio: {
+    type: DataTypes.DECIMAL,
+    allowNull: false,
+  },
+  stock: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  imagenes: {
+    type: DataTypes.JSON,
+  },
+  id_categoria: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  id_proveedor: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+},{
+  tableName: 'productos', 
+});
+
+Producto.belongsTo(Categoria, { foreignKey: 'id_categoria', onDelete: 'CASCADE' });
+Producto.hasMany(DetalleCarrito, { foreignKey: "id_producto"});
+Producto.belongsTo(Proveedor, { foreignKey: 'id_proveedor', onDelete: 'CASCADE' });
+
+module.exports = Producto;
