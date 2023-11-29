@@ -28,6 +28,6 @@ const Usuario = sequelize.define('Usuario', {
 });
 
 Usuario.hasMany(Cliente, { foreignKey: "id_usuario"});
-Usuario.hasMany(UsuarioRol, { foreignKey: "id_usuario"});
+//Usuario.hasMany(UsuarioRol, { foreignKey: "id_usuario"});
 
 module.exports = Usuario;

@@ -17,7 +17,7 @@ const UsuarioRol = sequelize.define('UsuarioRol', {
   tableName: 'usuariorols', 
 });
 
-UsuarioRol.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-UsuarioRol.belongsTo(Rol, { foreignKey: 'id_rol' });
+//UsuarioRol.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+//UsuarioRol.belongsTo(Rol, { foreignKey: 'id_rol' });
 
 module.exports = UsuarioRol;
