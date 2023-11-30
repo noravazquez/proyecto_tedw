@@ -3,6 +3,9 @@ const Direccion = require('../models/direccions');
 const OrdenCompra  = require('../models/ordencompras');
 const Usuario = require('../models/usuarios');
 const UsuarioRol = require('../models/usuariorols');
+const DetalleCarrito = require('../models/detallecarritos');
+const MetodoPago = require('../models/metodopagos');
+const CuponDescuento = require('../models/cupondescuentos');
 
 // Ver datos de facturación y envío
 exports.getUserInfo = async (req, res) => {
