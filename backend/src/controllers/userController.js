@@ -94,7 +94,7 @@
         where: { id_usuario: req.user.id_usuario },
       });
   
-      if (!cliente) {
+      if (!client) {
         return res.status(404).json({ message: 'Cliente no encontrado' });
       }
 
