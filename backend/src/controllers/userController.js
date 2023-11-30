@@ -1,4 +1,6 @@
   const Cliente = require('../models/clientes');
+  const Carrito = require('../models/carritos');
+  const Producto = require('../models/productos');
   const Direccion = require('../models/direccions');
   const OrdenCompra  = require('../models/ordencompras');
   const Usuario = require('../models/usuarios');
