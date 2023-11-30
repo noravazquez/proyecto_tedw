@@ -26,10 +26,7 @@ OrdenCompra.init({
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  id_direccion_envio: { 
-    type: DataTypes.INTEGER,
-  },
-  id_direccion_facturacion: { 
+  id_direccion: { 
     type: DataTypes.INTEGER,
   },
   id_metodo_pago: { 
