@@ -4,7 +4,7 @@ const sequelize = require('../config/database');
 class UsuarioRol extends Model {}
 
 UsuarioRol.init({
-  id: {
+  id_usuariorol: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
