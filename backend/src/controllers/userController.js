@@ -90,8 +90,16 @@
   // Ver ordenes por cliente
   exports.getUserOrders = async (req, res) => {
     try {
+      const client = await Cliente.findOne({
+        where: { id_usuario: req.user.id_usuario },
+      });
+  
+      if (!cliente) {
+        return res.status(404).json({ message: 'Cliente no encontrado' });
+      }
+
       const orders = await OrdenCompra.findAll({
-        where: { id_cliente: req.user.id_cliente },
+        where: { id_cliente: client.id_cliente },
         include: [
           {
             model: DetalleCarrito,
