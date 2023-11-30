@@ -4,6 +4,12 @@ const sequelize = require('../config/database');
 class UsuarioRol extends Model {}
 
 UsuarioRol.init({
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
   id_rol: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -17,6 +23,5 @@ UsuarioRol.init({
   modelName: 'UsuarioRol',
   tableName: 'usuariorols', 
 });
-
 
 module.exports = UsuarioRol;
