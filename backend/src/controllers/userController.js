@@ -12,7 +12,11 @@ exports.getUserInfo = async (req, res) => {
   try {
     const cliente = await Cliente.findAll({
       where: { id_usuario: req.user.id_usuario },
-      include: [{ model: Direccion }, { model: Usuario}, { model: UsuarioRol}],
+      include: [{ model: Direccion }, 
+        { 
+        model: Usuario,
+        include:[{ model: UsuarioRol}]
+        } ],
     });
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
