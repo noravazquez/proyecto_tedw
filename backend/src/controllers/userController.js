@@ -1,19 +1,20 @@
 const Cliente = require('../models/clientes');
-const  Direccion = require('../models/direccions');
-const  OrdenCompra  = require('../models/ordencompras');
+const Direccion = require('../models/direccions');
+const OrdenCompra  = require('../models/ordencompras');
 const Usuario = require('../models/usuarios');
+const UsuarioRol = require('../models/usuariorols');
 
 // Ver datos de facturación y envío
 exports.getUserInfo = async (req, res) => {
   try {
     const cliente = await Cliente.findAll({
       where: { id_usuario: req.user.id_usuario },
-      include: [{ model: Direccion }, { model: Usuario}],
+      include: [{ model: Direccion }, { model: Usuario}, { model: UsuarioRol}],
     });
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
-    res.json({ billingInfo: cliente });
+    res.json({ clientInfo: cliente });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al obtener datos de facturación y envío' });

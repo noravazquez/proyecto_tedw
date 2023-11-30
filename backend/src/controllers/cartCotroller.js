@@ -6,10 +6,9 @@ const CuponDescuento = require('../models/cupondescuentos');
 
 exports.agregarAlCarrito = async (req, res) => {
   try {
-    const { idProducto } = req.params; 
+    const { idProducto } = req.params;
     const { cantidad } = req.body;
 
-    
     if (!req.user || !req.user.id_usuario) {
       return res.status(400).json({ error: 'Usuario no autenticado' });
     }
@@ -29,24 +28,24 @@ exports.agregarAlCarrito = async (req, res) => {
     // Verificar si el producto ya está en el carrito del usuario
     let detalleCarrito = await DetalleCarrito.findOne({
       where: {
-        id_carrito: idCarrito, 
+        id_carrito: carrito.id_carrito,
         id_producto: idProducto,
       },
     });
 
-    //Agrega carrito
+    // Agregar al carrito
     if (detalleCarrito) {
       detalleCarrito.cantidad += cantidad;
       await detalleCarrito.save();
     } else {
       detalleCarrito = await DetalleCarrito.create({
-        id_carrito: idCarrito,
+        id_carrito: carrito.id_carrito,
         id_producto: idProducto,
         cantidad: cantidad,
       });
     }
 
-    //Devuelvo carrito
+    // Devolver carrito
     res.json({ message: 'Producto agregado al carrito de compra', carrito });
   } catch (error) {
     console.error('Error al agregar producto al carrito:', error);
