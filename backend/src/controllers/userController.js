@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
   const Cliente = require('../models/clientes');
   const Carrito = require('../models/carritos');
   const Producto = require('../models/productos');
