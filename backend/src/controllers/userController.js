@@ -64,6 +64,12 @@ const sequelize  = require('sequelize');
 
   exports.updateUserInfo = async (req, res) => {
     const { usuario, correo, contrasena } = req.body;
+    
+    // Validar el formato del correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(correo)) {
+      return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
+    }
 
     try {
       const usuarioBD = await Usuario.findByPk(req.user.id_usuario);
@@ -72,11 +78,12 @@ const sequelize  = require('sequelize');
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
 
+      const hashedPassword = await bcrypt.hash(contrasena, 10);
       // Actualizar los datos del usuario
       await usuarioBD.update({
         usuario: usuario,
-        correo,
-        contrasena,
+        correo:correo,
+        contrasena:hashedPassword,
       });
 
       res.json({ message: 'Datos de usuario actualizados correctamente' });
