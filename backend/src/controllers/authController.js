@@ -55,6 +55,10 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.logoutUser = (req, res) => {
-      req.logout();
-      res.json({ message: 'Sesión cerrada exitosamente' });
+  req.logout((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al cerrar sesión' });
+    }
+    res.json({ message: 'Sesión cerrada exitosamente' });
+  });
 };
