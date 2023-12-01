@@ -146,7 +146,7 @@ const sequelize  = require('sequelize');
         where: {
           id_cliente: userId,
           fecha: {
-            [Sequelize.Op.between]: [new Date(`${currentYear}-01-01`), new Date(`${currentYear}-12-31`)],
+            [sequelize.Op.between]: [new Date(`${currentYear}-01-01`), new Date(`${currentYear}-12-31`)],
           },
         },
         group: [sequelize.fn('date_part', 'month', sequelize.col('fecha'))],
