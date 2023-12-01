@@ -55,10 +55,6 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.logoutUser = (req, res) => {
-  if (!user) {
-      res.status(401).json({ error: 'No hay una sesión activa para cerrar' });
-  } else {
       req.logout();
       res.json({ message: 'Sesión cerrada exitosamente' });
-  }
 };
