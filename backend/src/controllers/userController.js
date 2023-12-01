@@ -1,4 +1,5 @@
 const sequelize  = require('sequelize');
+const bcrypt = require('bcrypt');
   const Cliente = require('../models/clientes');
   const Carrito = require('../models/carritos');
   const Producto = require('../models/productos');
