@@ -33,10 +33,6 @@ exports.registraCompra = async (req, res) => {
       where: {id_cupon_descuento: carrito.id_cupon_descuento}
     })
     
-    const producto =await Producto.findOne({
-      where: {id_producto: detallecarrito.id_producto}
-    })
-
     const direccion =await Direccion.findOne({
       where: {id_direccion: cliente.id_direccion}
     })
