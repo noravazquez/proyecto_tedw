@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const CardRegister = () => {
   return (
     <div className="relative lg:w-1/2 h-full flex flex-col p-20 justify-between">
-        <h1 className="font-primary text-2xl text-Blue1 font-semibold">Innovatech</h1>
+        <h1 className="font-primary text-2xl text-Blue1 font-semibold"><Link to={"/"}>Innovatech</Link></h1>
         <div className="w-full flex flex-col max-w-[450px]">
             <div className="w-full flex flex-col mb-5">
                 <h3 className="text-4xl font-primary font-semibold mb-2">Sign up</h3>
