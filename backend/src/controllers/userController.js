@@ -37,6 +37,27 @@ const bcrypt = require('bcrypt');
   };
 
 
+  //registrar cliente
+  exports.registerClient = async (req, res) => {
+    try {
+
+      const cliente = await Cliente.create({
+        nombre: req.body.nombre,
+        apellido_paterno: req.body.apellido_paterno,
+        apellido_materno: req.body.apellido_materno,
+        telefono: req.body.telefono,
+        id_usuario: req.user.id_usuario,
+      });
+      
+      res.json({ cliente });
+    } catch (error) {
+      console.error('Error en el registro de cliente:', error);
+      res.status(500).json({ error: 'Error en el registro de cliente' });
+    }
+  };
+  
+
+
   //update info client
   exports.updateClientInfo = async (req, res) => {
     const { nombre, apellido_paterno, apellido_materno, telefono } = req.body;
@@ -63,6 +84,8 @@ const bcrypt = require('bcrypt');
     }
   };
 
+
+  //Modificar usuario
   exports.updateUserInfo = async (req, res) => {
     const { usuario, correo, contrasena } = req.body;
     
@@ -71,22 +94,17 @@ const bcrypt = require('bcrypt');
     if (!emailRegex.test(correo)) {
       return res.status(400).json({ error: 'Formato de correo electrónico inválido' });
     }
-
     try {
       const usuarioBD = await Usuario.findByPk(req.user.id_usuario);
-
       if (!usuarioBD) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
-
       const hashedPassword = await bcrypt.hash(contrasena, 10);
-      // Actualizar los datos del usuario
       await usuarioBD.update({
         usuario: usuario,
         correo:correo,
         contrasena:hashedPassword,
       });
-
       res.json({ message: 'Datos de usuario actualizados correctamente' });
     } catch (error) {
       console.error(error);
