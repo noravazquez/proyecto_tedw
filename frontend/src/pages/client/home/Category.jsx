@@ -1,3 +1,6 @@
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+
 const imagenes = [
     {
         id: 1,
@@ -24,8 +27,6 @@ const imagenes = [
         imagen: "/images/smartwatch.png"
     }
 ]
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
 
 const Category = () => {
     const [categorias, setCategorias] = useState([])
@@ -57,9 +58,8 @@ const Category = () => {
         }
     })
 
-    console.log(categoriasImagen)
   return (
-    <div className="bg-gray-50 mb-5">
+    <div className="bg-gray-50">
         <h2 className="text-3xl font-primary font-semibold capitalize text-center my-8">Our Categories</h2>
         <div className="container pt-8 pr-16 pl-16">
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
