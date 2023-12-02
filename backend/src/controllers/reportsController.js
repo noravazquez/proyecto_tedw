@@ -8,11 +8,11 @@ const { Op } = require('sequelize');
 exports.totalVentasSemanal = async (req, res) =>  {
   try {
     const { year, week } = req.body; 
-
+    
     if (!year || !week) {
       return res.status(400).json({ error: 'Se requieren los parámetros year y week.' });
     }
-
+    
     // Obtener todos los carritos con sus detalles, clientes y órdenes relacionadas
     const carritos = await Carrito.findAll({
       include: [
@@ -33,33 +33,33 @@ exports.totalVentasSemanal = async (req, res) =>  {
         },
       ],
     });
-
+    
     // Inicializar totales
     const totales = {
       ordenes: 0,
       clientes: new Set(),
       productos: new Set(),
     };
-
+    
     // Calcular totales
     carritos.forEach((carrito) => {
       // Contar órdenes
       totales.ordenes += carrito.DetalleCarritos.length;
-
+      
       // Agregar clientes y productos a conjuntos para contar únicos
       carrito.DetalleCarritos.forEach((detalle) => {
         totales.clientes.add(carrito.Cliente.id_usuario);
         totales.productos.add(detalle.id_producto);
       });
     });
-
+    
     // Convertir conjuntos a longitud para obtener la cuenta
     totales.clientes = totales.clientes.size;
     totales.productos = totales.productos.size;
-
+    
     res.json({
       totales,
-
+      
     });
   } catch (error) {
     console.error('Error al calcular las ventas totales:', error);
@@ -71,7 +71,7 @@ exports.totalVentasSemanal = async (req, res) =>  {
 function obtenerRangoFechaS(year, week) {
   const inicioSemana = new Date(year, 0, 1 + (week - 1) * 7);
   const finSemana = new Date(year, 0, 1 + (week - 1) * 7 + 6);
-
+  
   return {
     [Op.gte]: inicioSemana,
     [Op.lte]: finSemana,
@@ -79,15 +79,15 @@ function obtenerRangoFechaS(year, week) {
 }
 
 
-
+//Total de ventas mensual
 exports.totalVentasMensual = async (req, res) => {
   try {
     const { year, month } = req.body;
-
+    
     if (!year || !month) {
       return res.status(400).json({ error: 'Se requieren los parámetros year y month.' });
     }
-
+    
     // Obtener todos los carritos con sus detalles, clientes y órdenes relacionadas
     const carritos = await Carrito.findAll({
       include: [
@@ -108,30 +108,30 @@ exports.totalVentasMensual = async (req, res) => {
         },
       ],
     });
-
+    
     // Inicializar totales
     const totales = {
       ordenes: 0,
       clientes: new Set(),
       productos: new Set(),
     };
-
+    
     // Calcular totales
     carritos.forEach((carrito) => {
       // Contar órdenes
       totales.ordenes += carrito.DetalleCarritos.length;
-
+      
       // Agregar clientes y productos a conjuntos para contar únicos
       carrito.DetalleCarritos.forEach((detalle) => {
         totales.clientes.add(carrito.Cliente.id_usuario);
         totales.productos.add(detalle.id_producto);
       });
     });
-
+    
     // Convertir conjuntos a longitud para obtener la cuenta
     totales.clientes = totales.clientes.size;
     totales.productos = totales.productos.size;
-
+    
     res.json({
       totales,
     });
@@ -145,7 +145,7 @@ exports.totalVentasMensual = async (req, res) => {
 function obtenerRangoFecha(year, month) {
   const inicioMes = new Date(year, month - 1, 1);
   const finMes = new Date(year, month, 0); // El día 0 del próximo mes es el último día del mes actual
-
+  
   return {
     [Op.gte]: inicioMes,
     [Op.lte]: finMes,
@@ -153,14 +153,15 @@ function obtenerRangoFecha(year, month) {
 }
 
 
+//total de ventas anual
 exports.totalVentasAnual = async (req, res) => {
   try {
     const { year } = req.body; 
-
+    
     if (!year) {
       return res.status(400).json({ error: 'Se requiere el parámetro year.' });
     }
-
+    
     // Obtener todos los carritos con sus detalles, clientes y órdenes relacionadas
     const carritos = await Carrito.findAll({
       include: [
@@ -181,30 +182,30 @@ exports.totalVentasAnual = async (req, res) => {
         },
       ],
     });
-
+    
     // Inicializar totales
     const totales = {
       ordenes: 0,
       clientes: new Set(),
       productos: new Set(),
     };
-
+    
     // Calcular totales
     carritos.forEach((carrito) => {
       // Contar órdenes
       totales.ordenes += carrito.DetalleCarritos.length;
-
+      
       // Agregar clientes y productos a conjuntos para contar únicos
       carrito.DetalleCarritos.forEach((detalle) => {
         totales.clientes.add(carrito.Cliente.id_usuario);
         totales.productos.add(detalle.id_producto);
       });
     });
-
+    
     // Convertir conjuntos a longitud para obtener la cuenta
     totales.clientes = totales.clientes.size;
     totales.productos = totales.productos.size;
-
+    
     res.json({
       totales,
     });
@@ -214,11 +215,12 @@ exports.totalVentasAnual = async (req, res) => {
   }
 };
 
+
 // Función para obtener el rango de fechas según el año
 function obtenerRangoFechaAnual(year) {
   const inicioAno = new Date(year, 0, 1);
   const finAno = new Date(year + 1, 0, 0); // El día 0 del próximo año es el último día del año actual
-
+  
   return {
     [Op.gte]: inicioAno,
     [Op.lte]: finAno,
@@ -226,25 +228,93 @@ function obtenerRangoFechaAnual(year) {
 }
 
 
-
-
-
-
 // Reporte Total clientes, ordenes y productos comprados
 exports.estadisticasClientes = async (req, res) => {
-    try {
-      const totalClientes = await Cliente.count();
-      const totalOrdenes = await OrdenCompra.count();
-      const totalProductosComprados = await DetalleCarrito.sum('cantidad');
-  
-      res.json({
-        totalClientes,
-        totalOrdenes,
-        totalProductosComprados,
-      });
-    } catch (error) {
-      console.error('Error al calcular las estadísticas de clientes:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+  try {
+    const totalClientes = await Cliente.count();
+    const totalOrdenes = await OrdenCompra.count();
+    const totalProductosComprados = await DetalleCarrito.sum('cantidad');
+    
+    res.json({
+      totalClientes,
+      totalOrdenes,
+      totalProductosComprados,
+    });
+  } catch (error) {
+    console.error('Error al calcular las estadísticas de clientes:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.totalProductos = async (req, res) => {
+  try {
+    const { year } = req.body; 
+    
+    if (!year) {
+      return res.status(400).json({ error: 'Se requiere el parámetro year.' });
     }
-  };
-  
+    
+    // Obtener todos los carritos con sus detalles, clientes y órdenes relacionadas
+    const carritos = await Carrito.findAll({
+      include: [
+        {
+          model: Cliente,
+          attributes: ['id_usuario'],
+        },
+        {
+          model: DetalleCarrito,
+          include: [
+            {
+              model: OrdenCompra,
+              where: {
+                fecha: obtenerRangoFechaAnual(year),
+              },
+            },
+          ],
+        },
+      ],
+    });
+    
+    // Inicializar totales
+    const totales = {
+      productos: new Set(),
+    };
+    
+    // Calcular totales
+    carritos.forEach((carrito) => {  
+      carrito.DetalleCarritos.forEach((detalle) => {
+        totales.productos.add(detalle.id_producto);
+      });
+    });
+    
+    res.json({
+      totales,
+    });
+  } catch (error) {
+    console.error('Error al calcular las ventas totales:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+
+
+exports.totalClientes = async (req, res) => {
+  try {
+    const clientes = await Cliente.findAll();
+    const totales = {
+      total:0,
+      clientes: new Set(),
+    };
+    clientes.forEach((cliente) => {
+      totales.clientes.add(cliente.id_usuario);
+    });
+    totales.total = clientes.size;
+    
+    res.json({
+      totales,
+    });
+  } catch (error) {
+    console.error('Error al calcular las ventas totales:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
