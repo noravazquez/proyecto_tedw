@@ -15,7 +15,7 @@ const Home = () => {
       </Helmet>
       <Banner />
       <Category />
-      <BestSeller />
+      {/*<BestSeller />*/}
       <section>
         <img src={offer} alt="Special offer" className="object-cover w-full h-auto transition duration-300"/>
       </section>

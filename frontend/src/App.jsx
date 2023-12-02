@@ -1,31 +1,19 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom'
 import './App.css'
-import NavbarAdmin from './components/NavbarAdmin';
-import SidebarAdmin from './components/SidebarAdmin';
-{/*import Navbar from './components/Navbar'
-import Sidebar from './components/Sidebar';
-import Footer from './components/Footer';*/}
+{/*import NavbarAdmin from './components/NavbarAdmin';
+import SidebarAdmin from './components/SidebarAdmin';*/}
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function App() {
-
-  {/*const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };*/}
   
   return (
     <>
-      {/*<Navbar toggleSidebar={toggleSidebar} />
-      <Sidebar isSidebarOpen={isSidebarOpen} closeSidebar={closeSidebar} />
+      <Navbar />
       <Outlet />
-      <Footer />*/}
-      <div className='flex'>
+      <Footer />
+      {/*<div className='flex'>
         <div className='basis-[18%] h-[100vh]'>
           <SidebarAdmin />
         </div>
@@ -33,7 +21,7 @@ function App() {
           <NavbarAdmin />
           <Outlet />
         </div>
-      </div>
+    </div>*/}
     </>
   )
 }
