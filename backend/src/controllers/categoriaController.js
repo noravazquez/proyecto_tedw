@@ -1,84 +1,82 @@
 const Categoria = require('../models/categorias');
 
-const categoriasController = {
-  getAllCategorias: async (req, res) => {
-    try {
-      const categorias = await Categoria.findAll();
-      res.json({ categorias });
-    } catch (error) {
-      console.error('Error al obtener categorías:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+exports.getAllCategorias = async (req, res) => {
+  try {
+    const categorias = await Categoria.findAll();
+    res.json({ categorias });
+  } catch (error) {
+    console.error('Error al obtener categorías:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.getCategoriaById= async (req, res) => {
+  try {
+    const { id } = req.params;
+    const categoria = await Categoria.findByPk(id);
+
+    if (!categoria) {
+      return res.status(404).json({ error: 'Categoría no encontrada' });
     }
-  },
 
-  getCategoriaById: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const categoria = await Categoria.findByPk(id);
+    res.json({ categoria });
+  } catch (error) {
+    console.error('Error al obtener detalles de la categoría:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
 
-      if (!categoria) {
-        return res.status(404).json({ error: 'Categoría no encontrada' });
-      }
+exports.createCategoria = async (req, res) => {
+  try {
+    const { nombre } = req.body;
 
-      res.json({ categoria });
-    } catch (error) {
-      console.error('Error al obtener detalles de la categoría:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+    const nuevaCategoria = await Categoria.create({
+      nombre,
+    });
+
+    res.json({ nuevaCategoria });
+  } catch (error) {
+    console.error('Error al crear una nueva categoría:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.updateCategoria = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre } = req.body;
+
+    const categoriaActualizada = await Categoria.update(
+      { nombre },
+      { where: { id } }
+    );
+
+    if (categoriaActualizada[0] === 0) {
+      return res.status(404).json({ error: 'Categoría no encontrada' });
     }
-  },
 
-  createCategoria: async (req, res) => {
-    try {
-      const { nombre } = req.body;
+    res.json({ mensaje: 'Categoría actualizada correctamente' });
+  } catch (error) {
+    console.error('Error al actualizar una categoría:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
 
-      const nuevaCategoria = await Categoria.create({
-        nombre,
-      });
+exports.deleteCategoria = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-      res.json({ nuevaCategoria });
-    } catch (error) {
-      console.error('Error al crear una nueva categoría:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
+    const resultado = await Categoria.destroy({ where: { id } });
+
+    if (!resultado) {
+      return res.status(404).json({ error: 'Categoría no encontrada' });
     }
-  },
 
-  updateCategoria: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { nombre } = req.body;
-
-      const categoriaActualizada = await Categoria.update(
-        { nombre },
-        { where: { id } }
-      );
-
-      if (categoriaActualizada[0] === 0) {
-        return res.status(404).json({ error: 'Categoría no encontrada' });
-      }
-
-      res.json({ mensaje: 'Categoría actualizada correctamente' });
-    } catch (error) {
-      console.error('Error al actualizar una categoría:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    }
-  },
-
-  deleteCategoria: async (req, res) => {
-    try {
-      const { id } = req.params;
-
-      const resultado = await Categoria.destroy({ where: { id } });
-
-      if (!resultado) {
-        return res.status(404).json({ error: 'Categoría no encontrada' });
-      }
-
-      res.json({ mensaje: 'Categoría eliminada correctamente' });
-    } catch (error) {
-      console.error('Error al eliminar una categoría:', error);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    }
-  },
+    res.json({ mensaje: 'Categoría eliminada correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar una categoría:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 };
 
 exports.eliminarCantidadDelCarrito = async (req, res) => {
@@ -128,6 +126,3 @@ exports.eliminarCantidadDelCarrito = async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
-
-
-module.exports = categoriasController;

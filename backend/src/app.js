@@ -16,6 +16,7 @@ const addressRoutes = require('./routes/address');
 const cartRoutes = require('./routes/cart');
 const checkoutRoutes = require('./routes/checkout');
 const reportsRoutes = require('./routes/reports');
+const adminRoutes = require('./routes/admin');
 
 const cors = require('cors');
 
@@ -57,6 +58,7 @@ app.use('/api/stats', reportsRoutes);
 app.use('/api/address', addressRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/checkout', checkoutRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
