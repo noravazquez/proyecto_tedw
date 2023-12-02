@@ -136,3 +136,53 @@ exports.obtenerDetalleProducto = async (req, res) => {
         res.status(500).json({error: "Error interno del servidor"})
       }
     }
+
+    exports.obtenerProductosByCategoria = async (req, res) => {
+      const {idCategoria} = req.params;
+
+      try {
+        const productos = await Producto.findAll({
+          include: [Categoria, Proveedor],
+          where: {
+            '$Categorium.id_categoria$': idCategoria
+          }
+        });
+        res.json({productos});
+      } catch (error) {
+        console.error('Error al obtener los productos por categoria: ', error);
+        res.status(500).json({error: "Error interno del servidor"});
+      }
+    }
+
+    exports.ultimosProductosByCatergoria = async (req, res) => {
+      const {idCategoria} = req.params;
+
+      try {
+        const productos = await Producto.findAll({
+          include: [Categoria, Proveedor],
+          where: {
+            '$Categorium.id_categoria$': idCategoria
+          },
+          order: [['id_categoria', 'DESC']],
+          limit: 4
+        });
+        res.json({productos});
+      } catch (error) {
+        console.error('Error al obtener los productos por categoria: ', error);
+        res.status(500).json({error: "Error interno del servidor"});
+      }
+    }
+
+    exports.ultimosProductos = async (req, res) => {
+      try {
+        const productos = await Producto.findAll({
+          include: [Categoria, Proveedor],
+          order: [['id_producto', 'DESC']],
+          limit: 4
+        });
+        res.json({productos});
+      } catch (error) {
+        console.error('Error al obtener los productos por categoria: ', error);
+        res.status(500).json({error: "Error interno del servidor"});
+      }
+    }
