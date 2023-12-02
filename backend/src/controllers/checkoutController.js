@@ -18,7 +18,7 @@ exports.registraCompra = async (req, res) => {
       where: { id_usuario: req.user.id_usuario },
     });
 
-    if (!client) {
+    if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
     const carrito = await Carrito.findByPk({
@@ -77,7 +77,7 @@ exports.registraCompra = async (req, res) => {
     }
   };
 
-  
+
 // Método para concluir el proceso de compra y levantar la orden de venta
 const concluirProcesoDeCompra = async (idOrdenCompra) => {
   const ordenCompra = await OrdenCompra.findByPk(idOrdenCompra);
