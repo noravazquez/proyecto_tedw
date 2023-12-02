@@ -147,3 +147,44 @@ exports.aplicarCuponDescuento = async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+exports.eliminarDelCarrito = async (req, res) => {
+  try {
+    const { idProducto } = req.params;
+
+    if (!req.user || !req.user.id_usuario) {
+      return res.status(400).json({ error: 'Usuario no autenticado' });
+    }
+
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+    });
+
+    const carrito = await Carrito.findOne({
+      where: { id_cliente: cliente.id_cliente },
+      include: [{
+        model: DetalleCarrito,
+        include: [Producto],
+      }],
+    });
+
+    // Verificar si el producto está en el carrito del usuario
+    const detalleCarrito = await DetalleCarrito.findOne({
+      where: {
+        id_carrito: carrito.id_carrito,
+        id_producto: idProducto,
+      },
+    });
+
+    // Si el producto está en el carrito, eliminarlo
+    if (detalleCarrito) {
+      await detalleCarrito.destroy();
+      res.json({ message: 'Producto eliminado del carrito de compra', carrito });
+    } else {
+      res.status(404).json({ error: 'Producto no encontrado en el carrito' });
+    }
+  } catch (error) {
+    console.error('Error al eliminar producto del carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
