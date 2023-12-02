@@ -37,7 +37,7 @@ exports.registraCompra = async (req, res) => {
       where: {id_cliente: cliente.id_cliente}
     })
     
-    const { metodo }= req.body
+    const  metodo = req.body
 
     const nuevaOrden = await OrdenCompra.create({
       fecha: new Date(),
@@ -45,7 +45,7 @@ exports.registraCompra = async (req, res) => {
       id_cliente: cliente.id_cliente,
       id_detalle_carrito: detallecarrito.id_detalle_carrito,
       id_direccion: direccion.id_direccion,
-      id_metodo_pago: metodo.id_metodo_pago
+      id_metodo_pago: metodo
     })
 
     res.json({
