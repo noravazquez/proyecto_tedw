@@ -21,23 +21,23 @@ exports.registraCompra = async (req, res) => {
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
-    const carrito = await Carrito.findByPk({
+    const carrito = await Carrito.findOne({
       where: {id_cliente:cliente.id_cliente}
     }) 
 
-    const detallecarrito =await DetalleCarrito.findByPk({
+    const detallecarrito =await DetalleCarrito.findOne({
       where: {id_carrito: carrito.id_carrito}
     })
 
-    const cupon =await CuponDescuento.findByPk({
+    const cupon =await CuponDescuento.findOne({
       where: {id_cupon_descuento: carrito.id_cupon_descuento}
     })
     
-    const producto =await Producto.findByPk({
+    const producto =await Producto.findOne({
       where: {id_producto: detallecarrito.id_producto}
     })
 
-    const direccion =await Direccion.findByPk({
+    const direccion =await Direccion.findOne({
       where: {id_direccion: cliente.id_direccion}
     })
     
