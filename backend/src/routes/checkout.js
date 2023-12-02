@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/authMiddleware');
-const { realizaCompra, concluirProcesoDeCompra } = require('../controllers/checkoutController');
+const { registraCompra, concluirProcesoDeCompra } = require('../controllers/checkoutController');
 
-router.post('/realizar-compra',  realizaCompra);
+router.post('/realizar-compra',  registraCompra);
 router.get('/ver-compras',  concluirProcesoDeCompra);
 
 module.exports = router;
