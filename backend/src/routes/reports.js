@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuthenticated } = require('../config/authMiddleware');
-const { totalVentas, estadisticasClientes, generarGraficoVentas } = require('../controllers/reportsController');
+const { totalVentasAnual, estadisticasClientes, totalVentasMensual ,totalVentasSemanal} = require('../controllers/reportsController');
 
-router.get('/total-ventas', totalVentas);
+router.get('/total-ventas-anual', totalVentasAnual);
 router.get('/estadisticas-clientes', estadisticasClientes);
-router.get('/generar-grafico-ventas', generarGraficoVentas);
+router.get('/total-ventas-mensual', totalVentasMensual);
+router.get('/total-ventas-semanal', totalVentasSemanal);
 
 module.exports = router;
