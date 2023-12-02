@@ -148,6 +148,7 @@ exports.aplicarCuponDescuento = async (req, res) => {
   }
 };
 
+
 exports.eliminarDelCarrito = async (req, res) => {
   try {
     const { idProducto } = req.params;
@@ -185,6 +186,54 @@ exports.eliminarDelCarrito = async (req, res) => {
     }
   } catch (error) {
     console.error('Error al eliminar producto del carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.eliminarCantidadDelCarrito = async (req, res) => {
+  try {
+    const { idProducto } = req.params;
+
+    if (!req.user || !req.user.id_usuario) {
+      return res.status(400).json({ error: 'Usuario no autenticado' });
+    }
+
+    const cliente = await Cliente.findOne({
+      where: { id_usuario: req.user.id_usuario },
+    });
+
+    const carrito = await Carrito.findOne({
+      where: { id_cliente: cliente.id_cliente },
+      include: [{
+        model: DetalleCarrito,
+        include: [Producto],
+      }],
+    });
+
+    // Verificar si el producto está en el carrito del usuario
+    const detalleCarrito = await DetalleCarrito.findOne({
+      where: {
+        id_carrito: carrito.id_carrito,
+        id_producto: idProducto,
+      },
+    });
+
+    // Si el producto está en el carrito, reducir la cantidad
+    if (detalleCarrito) {
+      if (detalleCarrito.cantidad > 1) {
+        detalleCarrito.cantidad -= 1;
+        await detalleCarrito.save();
+      } else {
+        // Si la cantidad es 1, eliminar el producto del carrito
+        await detalleCarrito.destroy();
+      }
+
+      res.json({ message: 'Cantidad reducida del producto en el carrito', carrito });
+    } else {
+      res.status(404).json({ error: 'Producto no encontrado en el carrito' });
+    }
+  } catch (error) {
+    console.error('Error al reducir cantidad del producto en el carrito:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
