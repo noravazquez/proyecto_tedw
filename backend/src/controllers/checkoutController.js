@@ -45,7 +45,7 @@ exports.registraCompra = async (req, res) => {
       id_cliente: cliente.id_cliente,
       id_detalle_carrito: detallecarrito.id_detalle_carrito,
       id_direccion: direccion.id_direccion,
-      id_metodo_pago: metodo
+      id_metodo_pago: metodo.id_metodo_pago
     })
 
     res.json({
