@@ -1,10 +1,13 @@
 const Producto = require('../models/productos')
 const Categoria = require('../models/categorias')
-const Proveedor = require('../models/proveedors')
+const Proveedor = require('../models/proveedors');
+const { Sequelize } = require('sequelize');
 
 exports.obtenerProductos = async (req, res) =>{
     try {
-        const productos=await Producto.findAll();
+        const productos=await Producto.findAll({
+          include: [Categoria, Proveedor]
+        });
         res.json({productos});
     } catch (error) {
         console.error('Error al obtener productos:', error);
@@ -108,5 +111,28 @@ exports.obtenerDetalleProducto = async (req, res) => {
       } catch (error) {
         console.error('Error al eliminar un producto:', error);
         res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    }
+
+    exports.totalProductosByCategoria = async (req, res) => {
+      try {
+        const totalByCategoria = await Producto.findAll(
+          {
+            attributes: [
+              [Sequelize.fn('COUNT', Sequelize.col('id_producto')), 'totalProductos']
+            ],
+            include: [
+              {
+                model: Categoria,
+                attributes: ['id_categoria', 'categoria']
+              }
+            ],
+            group: ['Categorium.id_categoria']
+          }
+        );
+        res.json({totalByCategoria});
+      } catch (error) {
+        console.error('Error al calcular el total de productos por categoria',error);
+        res.status(500).json({error: "Error interno del servidor"})
       }
     }
