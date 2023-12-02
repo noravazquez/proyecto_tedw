@@ -5,7 +5,7 @@ import logo from '/images/logo.png'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 
-const Navbar = ({ toggleSidebar }) => {
+const Navbar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -60,8 +60,8 @@ const Navbar = ({ toggleSidebar }) => {
                     </div>
                 </div>
                 <div className="relative inline-flex items-center">
-                    <a href="#" onClick={toggleSidebar}><FaShoppingCart /></a>
-                    <button type="button" onClick={toggleSidebar}>
+                    <a href="#"><FaShoppingCart /></a>
+                    <button type="button">
                         <div className="absolute -top-3 -right-3 bg-Blue3 text-white rounded-full w-5 h-5 flex items-center justify-center">0</div>
                     </button>
                     
@@ -152,10 +152,6 @@ const Navbar = ({ toggleSidebar }) => {
         </div>
     </header>
   )
-}
-
-Navbar.propTypes = {
-    toggleSidebar: PropTypes.func.isRequired,
 }
 
 export default Navbar
