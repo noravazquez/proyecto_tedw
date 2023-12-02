@@ -61,7 +61,7 @@ exports.registraCompra = async (req, res) => {
 
   exports.concluirProcesoDeCompra = async (req, res) => {
     try {
-      const { idOrdenCompra } = req.body;
+      const { idOrdenCompra } = req.params;
       const ordenCompraFinalizada = await concluirProcesoDeCompra(idOrdenCompra);
       res.json({
         message: 'Proceso de compra concluido con éxito',
