@@ -5,7 +5,7 @@ const { agregarAlCarrito, obtenerCarrito, aplicarCuponDescuento, eliminarCantida
 router.post('/agregar-al-carrito/:idProducto', agregarAlCarrito);
 router.get('/carrito', obtenerCarrito);
 router.get('/cupon', aplicarCuponDescuento);
-router.post('/eliminar-del-carrito/:idProducto', eliminarDelCarrito);
-router.post('/elimina-de-carrito/:idProducto', eliminarCantidadDelCarrito);
+router.delete('/eliminar-del-carrito/:idProducto', eliminarDelCarrito);
+router.delete('/elimina-de-carrito/:idProducto', eliminarCantidadDelCarrito);
 
 module.exports = router;
