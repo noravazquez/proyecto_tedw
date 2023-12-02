@@ -34,7 +34,7 @@ exports.registraCompra = async (req, res) => {
     })
     
     const direccion =await Direccion.findOne({
-      where: {id_direccion: cliente.id_direccion}
+      where: {id_cliente: cliente.id_cliente}
     })
     
     const { metodo }= req.body
