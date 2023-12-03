@@ -213,7 +213,7 @@ exports.totalVentasAnual = async (req, res) => {
       carrito.DetalleCarritos.forEach((detalle) => {
         totales.clientes.add(carrito.id_cliente);
         totales.productos.add(detalle.id_producto);
-        totales.montoTotal += carrito.total; 
+        totales.montoTotal += Number(carrito.total); 
       });
     });
 
