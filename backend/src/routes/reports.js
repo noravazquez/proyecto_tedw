@@ -5,7 +5,7 @@ const { totalVentasAnual, estadisticasClientes, totalVentasMensual, totalVentasS
 
 router.get('/total-ventas-anual', totalVentasAnual);
 router.get('/estadisticas-clientes', estadisticasClientes);
-router.get('/total-ventas-mensual', totalVentasMensual);
+router.post('/total-ventas-mensual', totalVentasMensual);
 router.get('/total-ventas-semanal', totalVentasSemanal);
 router.get('/total-productos-vendidos', totalProductos);
 router.get('/total-clientes-registrados', totalClientes);
