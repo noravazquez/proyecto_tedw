@@ -14,14 +14,14 @@ const ListaProductos = ({ idCategoriaSeleccionada }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = 'http://54.80.197.84:3003/api/product/products'
+                let url = 'http://54.166.237.193:3003/api/product/products'
 
                 if (idCategoriaSeleccionada != null) {
-                    url = `http://54.80.197.84:3003/api/product/productsByCategoria/${idCategoriaSeleccionada}`
-                    const totalResponse = await axios.get(`http://54.80.197.84:3003/api/product/productoByCategoria/${idCategoriaSeleccionada}`);
+                    url = `http://54.166.237.193:3003/api/product/productsByCategoria/${idCategoriaSeleccionada}`
+                    const totalResponse = await axios.get(`http://54.166.237.193:3003/api/product/productoByCategoria/${idCategoriaSeleccionada}`);
                     setTotalProductos(totalResponse.data.totalByCategoria)
                 }else{
-                    const totalResponse = await axios.get('http://54.80.197.84:3003/api/product/totalProductos');
+                    const totalResponse = await axios.get('http://54.166.237.193:3003/api/product/totalProductos');
                     setTotalProductos(totalResponse.data.totalProductos)
                 }
 

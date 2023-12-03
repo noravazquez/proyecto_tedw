@@ -10,9 +10,9 @@ const BestSeller = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productosResponse = await axios.get('http://54.80.197.84:3003/api/product/lastproducts')
+        const productosResponse = await axios.get('http://54.166.237.193:3003/api/product/lastproducts')
         setLastProductos(productosResponse.data.productos)
-        const response = await axios.get('http://54.80.197.84:3003/api/admin/categorias')
+        const response = await axios.get('http://54.166.237.193:3003/api/admin/categorias')
         setCategorias(response.data.categorias)
       } catch (error) {
         console.error(error);
@@ -24,7 +24,7 @@ const BestSeller = () => {
   const handleCategoriaClick = async (idCategoria) => {
     try {
       //console.log(idCategoria)
-      let url = 'http://54.80.197.84:3003/api/product/lastproducts';
+      let url = 'http://54.166.237.193:3003/api/product/lastproducts';
 
       if (idCategoria !== null) {
         url += `/${idCategoria}`;

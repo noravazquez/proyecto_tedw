@@ -2,6 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import ContactForm from './ContactForm';
 import ContactInformation from './ContactInformation';
+import BreadCrumb from '../../../components/BreadCrumb';
 
 const Contact = () => {
     return (
@@ -10,6 +11,7 @@ const Contact = () => {
                 <meta charSet="utf-8"/>
                 <title>Contact</title>
             </Helmet>
+            <BreadCrumb title="Contact"/>
             <section className="relative z-10 overflow-hidden bg-Blue6 py-20 lg:py-[120px]">
                 <div className="container">
                     <div className="-mx-4 flex flex-wrap lg:justify-between">
