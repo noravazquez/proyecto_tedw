@@ -4,6 +4,6 @@ const { ensureAuthenticated } = require('../config/authMiddleware');
 const { registraCompra, concluirProcesoDeCompra } = require('../controllers/checkoutController');
 
 router.post('/realizar-compra',  registraCompra);
-router.get('/ver-compras',  concluirProcesoDeCompra);
+router.get('/ver-compras/:idOrdenCompra',  concluirProcesoDeCompra);
 
 module.exports = router;
