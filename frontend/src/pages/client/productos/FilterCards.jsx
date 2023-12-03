@@ -9,7 +9,7 @@ const FilterCards = ({ onCategoriaSeleccionada }) => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get('http://54.80.197.84:3003/api/admin/categorias')
+            const response = await axios.get('http://54.224.214.208:3003/api/admin/categorias')
             setCategorias(response.data.categorias)
           } catch (error) {
             console.error(error);
