@@ -202,6 +202,12 @@ exports.eliminarDelCarrito = async (req, res) => {
     // Si el producto está en el carrito, eliminarlo
     if (detalleCarrito) {
       await detalleCarrito.destroy();
+
+       // Calcular el nuevo total del carrito
+      const nuevoTotal = await calcularTotalCarrito(carrito.id_carrito);
+      carrito.total = nuevoTotal;
+      await carrito.save();
+
       res.json({ message: 'Producto eliminado del carrito de compra', carrito });
     } else {
       res.status(404).json({ error: 'Producto no encontrado en el carrito' });
@@ -245,10 +251,17 @@ exports.eliminarCantidadDelCarrito = async (req, res) => {
       if (detalleCarrito.cantidad > 1) {
         detalleCarrito.cantidad -= 1;
         await detalleCarrito.save();
+
+        
       } else {
         // Si la cantidad es 1, eliminar el producto del carrito
         await detalleCarrito.destroy();
       }
+
+       // Calcular el nuevo total del carrito
+      const nuevoTotal = await calcularTotalCarrito(carrito.id_carrito);
+      carrito.total = nuevoTotal;
+      await carrito.save();
 
       res.json({ message: 'Cantidad reducida del producto en el carrito', carrito });
     } else {
