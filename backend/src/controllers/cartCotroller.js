@@ -4,6 +4,34 @@ const Producto = require('../models/productos');
 const DetalleCarrito = require('../models/detallecarritos');
 const CuponDescuento = require('../models/cupondescuentos');
 
+// Método para calcular el total del carrito
+const calcularTotalCarrito = async (idCarrito) => {
+  try {
+    const carrito = await Carrito.findOne({
+      where: { id_carrito: idCarrito },
+      include: [{
+        model: DetalleCarrito,
+        include: [Producto],
+      }],
+    });
+
+    let total = 0;
+
+    if (carrito && carrito.DetalleCarritos) {
+      carrito.DetalleCarritos.forEach((detalle) => {
+        total += detalle.cantidad * detalle.Producto.precio;
+      });
+    }
+
+    return total;
+  } catch (error) {
+    console.error('Error al calcular el total del carrito:', error);
+    throw error;
+  }
+};
+
+
+// Método para agregar un producto al carrito
 exports.agregarAlCarrito = async (req, res) => {
   try {
     const { idProducto } = req.params;
@@ -45,7 +73,12 @@ exports.agregarAlCarrito = async (req, res) => {
       });
     }
 
-    // Devolver carrito
+    // Calcular el nuevo total del carrito
+    const nuevoTotal = await calcularTotalCarrito(carrito.id_carrito);
+    carrito.total = nuevoTotal;
+    await carrito.save();
+
+    // Devolver carrito con el nuevo total
     res.json({ message: 'Producto agregado al carrito de compra', carrito });
   } catch (error) {
     console.error('Error al agregar producto al carrito:', error);
@@ -73,17 +106,6 @@ exports.obtenerCarrito = async (req, res) => {
     });
 
     if (carrito) {
-      let totalCarrito = 0;
-
-      // Calcular el total del carrito
-      for (const detalleCarrito of carrito.DetalleCarritos) {
-        const totalProducto = detalleCarrito.cantidad * detalleCarrito.Producto.precio;
-        totalCarrito += totalProducto;
-      }
-
-      // Actualizar el total
-      await carrito.update({ total: totalCarrito });
-
       res.json({ carrito });
     } else {
       console.error('Carrito no encontrado');
