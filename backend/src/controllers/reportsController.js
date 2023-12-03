@@ -302,14 +302,20 @@ exports.totalClientes = async (req, res) => {
   try {
     const clientes = await Cliente.findAll();
     const totales = {
-      total:0,
-      clientes: new Set(),
+      total: 0,
+      clientes: [],
     };
+
     clientes.forEach((cliente) => {
-      totales.clientes.add(cliente.id_usuario);
+      totales.clientes.push({
+        nombre: cliente.nombre,
+        apellido_paterno: cliente.apellido_paterno,
+        apellido_materno: cliente.apellido_materno,
+      });
     });
-    totales.total = clientes.size;
-    
+
+    totales.total = totales.clientes.length;
+
     res.json({
       totales,
     });

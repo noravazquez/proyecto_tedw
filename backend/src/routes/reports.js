@@ -8,6 +8,6 @@ router.get('/estadisticas-clientes', estadisticasClientes);
 router.get('/total-ventas-mensual', totalVentasMensual);
 router.get('/total-ventas-semanal', totalVentasSemanal);
 router.get('/total-productos-vendidos', totalProductos);
-router.get('/total-clientes-registrados', totalClientes);totalClientes
+router.get('/total-clientes-registrados', totalClientes);
 
 module.exports = router;
