@@ -14,7 +14,7 @@ router.post('/total-ventas-anual', totalVentasAnual);
 router.get('/estadisticas-clientes', estadisticasClientes);
 router.post('/total-ventas-mensual', totalVentasMensual);
 router.get('/total-ventas-semanal', totalVentasSemanal);
-router.get('/total-productos-vendidos', totalProductos);
+router.post('/total-productos-vendidos', totalProductos);
 router.get('/total-clientes-registrados', totalClientes);
 
 module.exports = router;

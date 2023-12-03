@@ -1,58 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+import axios from 'axios'
 
 const VentasMensuales = () => {
+  const [monthlySales, setMonthlySales] = useState([]);
+  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+  const fetchMonthlySales = async (year) => {
+    const fetchedData =[];
+
+    for (let month = 1; month <= 12; month++) {
+      try {
+        const response = await axios.post('http://23.20.161.84:3003/api/stats/total-ventas-mensual', {
+          year: year,
+          month: month,
+        });
+  
+        const totalVentasMes = response.data.totales.montoTotal;
+        fetchedData.push({ month: months[month - 1], total: totalVentasMes });
+      } catch (error) {
+        console.error(`Error al obtener datos para ${months[month - 1]}`, error);
+      }
+    }
+    setMonthlySales(fetchedData);
+  };
+
+  useEffect(() => {
+    fetchMonthlySales(2023);
+  })
+  
+  fetchMonthlySales(2023);
   return (
     <ResponsiveContainer width='100%' aspect={2}>
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={monthlySales}
           margin={{
             top: 5,
             right: 30,
@@ -61,12 +44,11 @@ const VentasMensuales = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="month" angle={-45} textAnchor="end" interval={0}/>
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-          <Bar dataKey="uv" fill="#82ca9d" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+          <Bar dataKey="total" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
         </BarChart>
     </ResponsiveContainer>
   )
