@@ -13,7 +13,7 @@ const Producto = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://54.226.235.180:3003/api/product/products/${id}`)
+        const response = await axios.get(`http://54.80.197.84:3003/api/product/products/${id}`)
         setProducto(response.data.producto)
       } catch (error) {
         console.error(error)
