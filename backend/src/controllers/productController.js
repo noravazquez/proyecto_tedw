@@ -137,6 +137,21 @@ exports.obtenerDetalleProducto = async (req, res) => {
       }
     }
 
+    exports.totalProductos = async (req, res) => {
+      try {
+        const totalProductos = await Producto.findAll({
+          attributes: [
+            [Sequelize.fn('COUNT', Sequelize.col('id_producto')), 'totalProductos']
+          ]
+        });
+    
+        res.json({ totalProductos });
+      } catch (error) {
+        console.error('Error al calcular el total de productos en general', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    };
+
     exports.obtenerProductosByCategoria = async (req, res) => {
       const {idCategoria} = req.params;
 

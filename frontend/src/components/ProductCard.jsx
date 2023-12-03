@@ -27,7 +27,7 @@ const ProductCard = ({producto}) => {
         }
       </div>
       <div className="relative z-10 top-2 font-primary">
-        <h6 className="text-Blue4 text-sm">{producto.id_proveedor}</h6>
+        <h6 className="text-Blue4 text-sm">{producto.Proveedor.proveedor}</h6>
         <h5 className="text-Blue1 text-base font-bold">{producto.producto}</h5>
         <p className="text-Blue2 text-lg">${producto.precio} mx</p>
       </div>
