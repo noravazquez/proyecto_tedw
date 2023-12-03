@@ -248,12 +248,12 @@ exports.estadisticasClientes = async (req, res) => {
 
 exports.totalProductos = async (req, res) => {
   try {
-    const { year } = req.body; 
-    
+    const { year } = req.body;
+
     if (!year) {
       return res.status(400).json({ error: 'Se requiere el parámetro year.' });
     }
-    
+
     // Obtener todos los carritos con sus detalles, clientes y órdenes relacionadas
     const carritos = await Carrito.findAll({
       include: [
@@ -274,19 +274,27 @@ exports.totalProductos = async (req, res) => {
         },
       ],
     });
-    
+
     // Inicializar totales
     const totales = {
-      productos: new Set(),
+      productos: {},
     };
-    
+
     // Calcular totales
-    carritos.forEach((carrito) => {  
+    carritos.forEach((carrito) => {
       carrito.DetalleCarritos.forEach((detalle) => {
-        totales.productos.add(detalle.id_producto);
+        const idProducto = detalle.id_producto;
+
+        if (totales.productos[idProducto]) {
+          // El producto ya existe en el objeto, incrementar la cantidad
+          totales.productos[idProducto] += detalle.cantidad;
+        } else {
+          // El producto no existe en el objeto, agregarlo con la cantidad actual
+          totales.productos[idProducto] = detalle.cantidad;
+        }
       });
     });
-    
+
     res.json({
       totales,
     });
@@ -295,6 +303,7 @@ exports.totalProductos = async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
 
 
 
