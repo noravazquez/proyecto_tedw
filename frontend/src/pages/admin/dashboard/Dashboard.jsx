@@ -2,7 +2,7 @@ import React from 'react'
 import CardsTotal from './CardsTotal'
 import Ventas from './Ventas'
 import RecentOrders from './RecentOrders'
-import PopularProducts from './PopularProducts'
+import LastProducts from './LastProducts'
 
 const Dashboard = () => {
   return (
@@ -15,7 +15,7 @@ const Dashboard = () => {
           <RecentOrders />
         </div>
         <div className='basis-[30%] border bg-white shadow-sm rounded'>
-          <PopularProducts />
+          <LastProducts />
         </div>
       </div>
     </div>

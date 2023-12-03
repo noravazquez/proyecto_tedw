@@ -1,6 +1,7 @@
 const express = require('express');
 const authorize = require('../config/authMiddleware');
 const { getAllCategorias, getCategoriaById, createCategoria, deleteCategoria, updateCategoria} = require('../controllers/categoriaController');
+const {obtenerOrdenesConDetalles} = require('../controllers/reportsController')
 
 const router = express.Router();
 
@@ -15,5 +16,7 @@ router.get('/categoria/:id', getCategoriaById);
 router.post('/categoria', createCategoria);
 router.put('/categoria/:id', updateCategoria);
 router.delete('/categoria/:id', deleteCategoria);
+
+router.get('/detallesordenes', obtenerOrdenesConDetalles);
 
 module.exports = router;

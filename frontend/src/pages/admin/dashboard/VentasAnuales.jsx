@@ -1,5 +1,6 @@
-import React from 'react'
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const data = [
     {
@@ -47,27 +48,50 @@ const data = [
 ];
 
 const VentasAnuales = () => {
+  const [totalVentasAnio, setTotalVentasAnio] = useState([]);
+  const years = [2023, 2022, 2021, 2020, 2019];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ventasPorAnio = await Promise.all(
+          years.map(async (year) => {
+            const response = await axios.post('http://23.20.161.84:3003/api/stats/total-ventas-anual', {
+              year: year,
+            });
+            return { year, total: response.data.totales.montoTotal };
+          })
+        );
+
+        setTotalVentasAnio(ventasPorAnio);
+      } catch (error) {
+        console.error('Error al obtener el total de ventas anuales', error);
+      }
+    };
+
+    fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <ResponsiveContainer width='100%' aspect={2}>
-        <LineChart
-            width={1000}
-            height={500}
-            data={data}
-            margin={{
+        <BarChart
+          width={500}
+          height={300}
+          data={totalVentasAnio}
+          margin={{
             top: 5,
             right: 30,
             left: 20,
             bottom: 5,
-            }}
+          }}
         >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="year" angle={-45} textAnchor="end" interval={0}/>
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="total" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+        </BarChart>
     </ResponsiveContainer>
   )
 }

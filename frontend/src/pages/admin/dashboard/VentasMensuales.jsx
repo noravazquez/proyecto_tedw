@@ -4,9 +4,9 @@ import axios from 'axios'
 
 const VentasMensuales = () => {
   const [monthlySales, setMonthlySales] = useState([]);
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
   const fetchMonthlySales = async (year) => {
+    const months = ['Enero', 'Febero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const fetchedData =[];
 
     for (let month = 1; month <= 12; month++) {
@@ -26,10 +26,13 @@ const VentasMensuales = () => {
   };
 
   useEffect(() => {
-    fetchMonthlySales(2023);
-  })
-  
-  fetchMonthlySales(2023);
+    const fetchData = async () => {
+      await fetchMonthlySales(2023);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <ResponsiveContainer width='100%' aspect={2}>
         <BarChart

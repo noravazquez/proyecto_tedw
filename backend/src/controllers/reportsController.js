@@ -3,7 +3,8 @@ const  DetalleCarrito = require('../models/detallecarritos');
 const  Cliente = require('../models/clientes');
 const  Carrito = require('../models/carritos');
 const  Producto = require('../models/productos');
-const { Op } = require('sequelize');
+const Direccions = require('../models/direccions');
+const { Op, fn, col } = require('sequelize');
 
 
 // Reporte Total de ventas semanales
@@ -350,6 +351,37 @@ exports.totalClientes = async (req, res) => {
     });
   } catch (error) {
     console.error('Error al calcular las ventas totales:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.obtenerOrdenesConDetalles = async (req, res) => {
+  try {
+    const ordenes = await OrdenCompra.findAll({
+      attributes: ['id_orden_compra', 'fecha', 'estado_orden'],
+      include: [
+        {
+          model: Cliente,
+          attributes: [
+            [fn('concat', col('nombre'), ' ', col('apellido_paterno'), ' ', col('apellido_materno')), 'cliente'],
+          ],
+        },
+        {
+          model: DetalleCarrito,
+          attributes: [],
+        },
+        {
+          model: Direccions,
+          attributes: [
+            [fn('concat', col('calle'), ', ', col('ciudad'), ', ', col('estado')), 'direccion'],
+          ],
+        },
+      ],
+    });
+
+    res.json(ordenes);
+  } catch (error) {
+    console.error('Error al obtener órdenes con detalles:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };

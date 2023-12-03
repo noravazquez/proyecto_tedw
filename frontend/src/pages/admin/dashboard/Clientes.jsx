@@ -1,74 +1,93 @@
-import React from 'react'
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 
-const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-];
+const recentOrderData = [
+  {
+      id: '1',
+      product: 'Hola',
+      customer: 'Jose Perez',
+      order_date: '2022-25-17',
+      order_total: '$3232.32',
+      order_status: 'PLACED',
+      address: 'Direccion 121 Gto'
+  },
+  {
+      id: '1',
+      product: 'Hola',
+      customer: 'Jose Perez',
+      order_date: '2022-25-17',
+      order_total: '$3232.32',
+      order_status: 'CONFIRMED',
+      address: 'Direccion 121 Gto'
+  },
+  {
+      id: '1',
+      product: 'Hola',
+      customer: 'Jose Perez',
+      order_date: '2022-25-17',
+      order_total: '$3232.32',
+      order_status: 'OUT_FOR_DELIVERY',
+      address: 'Direccion 121 Gto'
+  },
+  {
+      id: '1',
+      product: 'Hola',
+      customer: 'Jose Perez',
+      order_date: '2022-25-17',
+      order_total: '$3232.32',
+      order_status: 'DELIVERED',
+      address: 'Direccion 121 Gto'
+  },
+  {
+      id: '1',
+      product: 'Hola',
+      customer: 'Jose Perez',
+      order_date: '2022-25-17',
+      order_total: '$3232.32',
+      order_status: 'SHIPPED',
+      address: 'Direccion 121 Gto'
+  }
+]
 
 const Clientes = () => {
+  const [clientes, setClientes] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+          try {
+            const response = await axios.get('http://23.20.161.84:3003/api/stats/total-clientes-registrados');
+            setClientes(response.data.totales.clientes);
+          } catch (error) {
+            console.error('Error al obtener el total de ventas mensuales', error);
+            // Puedes manejar el error según tus necesidades
+          }
+        };
+  
+      fetchData();
+    }, []);
   return (
-    <ResponsiveContainer width='100%' aspect={2}>
-        <LineChart
-            width={1000}
-            height={500}
-            data={data}
-            margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-            }}
-        >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
-    </ResponsiveContainer>
+    <div className='mx-3 mb-3'>
+            <table className='w-full border border-collapse font-primary'>
+                <thead>
+                    <tr className='bg-gray-200 font-semibold'>
+                        <td className='border p-2'>Nombre</td>
+                        <td className='border p-2'>Apellido paterno</td>
+                        <td className='border p-2'>Apellido materno</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        clientes.map((cliente, index) => (
+                            <tr key={index}>
+                                <td className='border p-2'>{cliente.nombre}</td>
+                                <td className='border p-2'>{cliente.apellido_paterno}</td>
+                                <td className='border p-2'>{cliente.apellido_materno}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
   )
 }
 
