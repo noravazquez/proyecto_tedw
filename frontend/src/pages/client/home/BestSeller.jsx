@@ -55,7 +55,7 @@ const BestSeller = () => {
         </div>
         <div className="pt-5 grid lg:grid-cols-4 sm:grid-cols-2 gap-4">
             { lastProducts.map((lastProduct) => (
-              <ProductCard key={lastProduct.id_producto} producto={lastProduct}/>
+              <ProductCard key={lastProduct.id_producto} producto={lastProduct} grid={4}/>
             ))}
         </div>
       </div>

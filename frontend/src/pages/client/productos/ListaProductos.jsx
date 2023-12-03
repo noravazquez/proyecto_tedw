@@ -8,7 +8,8 @@ import { LuGrip, LuGripHorizontal, LuGripVertical } from "react-icons/lu";
 const ListaProductos = ({ idCategoriaSeleccionada }) => {
     const [productos, setProductos] = useState([])
     const [totalProductos, setTotalProductos] = useState(null)
-    console.log(idCategoriaSeleccionada)
+    const [grid, setGrid] = useState(4);
+    //console.log(idCategoriaSeleccionada)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,10 +18,13 @@ const ListaProductos = ({ idCategoriaSeleccionada }) => {
 
                 if (idCategoriaSeleccionada != null) {
                     url = `http://54.80.197.84:3003/api/product/productsByCategoria/${idCategoriaSeleccionada}`
+                    const totalResponse = await axios.get(`http://54.80.197.84:3003/api/product/productoByCategoria/${idCategoriaSeleccionada}`);
+                    setTotalProductos(totalResponse.data.totalByCategoria)
+                }else{
+                    const totalResponse = await axios.get('http://54.80.197.84:3003/api/product/totalProductos');
+                    setTotalProductos(totalResponse.data.totalProductos)
                 }
 
-                const totalResponse = await axios.get('http://54.80.197.84:3003/api/product/totalProductos');
-                setTotalProductos(totalResponse.data.totalProductos)
                 const response = await axios.get(url)
                 setProductos(response.data.productos)
             } catch (error) {
@@ -39,19 +43,19 @@ const ListaProductos = ({ idCategoriaSeleccionada }) => {
                     {totalProductos && totalProductos[0] ? `${totalProductos[0].totalProductos} productos` : 'Sin productos'}
                     </p>
                     <div className="flex gap-2 items-center">
-                        <TfiLayoutGrid4Alt className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" />
-                        <LuGrip className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" />
-                        <LuGripVertical className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" />
-                        <LuGripHorizontal className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" />
+                        <TfiLayoutGrid4Alt className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" onClick={() => setGrid(4)}/>
+                        <LuGrip className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" onClick={() => setGrid(3)}/>
+                        <LuGripVertical className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" onClick={() => setGrid(2)}/>
+                        <LuGripHorizontal className="text-gray-600 w-8 h-8 bg-Blue5 p-2 rounded-sm cursor-pointer" onClick={() => setGrid(1)}/>
                     </div>
                 </div>
             </div>
         </div>
         <div className="pb-5">
-            <div className="gap-2 flex-wrap grid grid-cols-4">
+            <div className={`gap-2 flex-wrap grid ${grid === 4 ? 'grid-cols-4' : grid === 3 ? 'grid-cols-3' : grid === 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                 {
                     productos.map((producto) => (
-                        <ProductCard key={producto.id_producto} producto={producto}/>
+                        <ProductCard key={producto.id_producto} producto={producto} grid={grid}/>
                     ))
                 }
             </div>

@@ -221,3 +221,22 @@ exports.obtenerDetalleProducto = async (req, res) => {
         res.status(500).json({error: "Error interno del servidor"});
       }
     }
+
+    exports.buscarProductos = async (req, res) => {
+      try {
+        const {producto} = req.query;
+
+        const productos = await Producto.findAll({
+          include: [Categoria, Proveedor],
+          where: {
+            producto: {
+              [Sequelize.Op.iLike]: `%${producto}%`
+            }
+          }
+        });
+        res.json({productos})
+      } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    }
