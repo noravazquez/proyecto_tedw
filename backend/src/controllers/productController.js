@@ -137,6 +137,26 @@ exports.obtenerDetalleProducto = async (req, res) => {
       }
     }
 
+    exports.totalProductosCategoria = async (req, res) => {
+      try {
+        const { idCategoria } = req.params;
+    
+        const totalByCategoria = await Producto.findAll({
+          attributes: [
+            [Sequelize.fn('COUNT', Sequelize.col('id_producto')), 'totalProductos']
+          ],
+          where: {
+            id_categoria: idCategoria
+          }
+        });
+    
+        res.json({ totalByCategoria });
+      } catch (error) {
+        console.error('Error al calcular el total de productos por categoría', error);
+        res.status(500).json({ error: "Error interno del servidor" });
+      }
+    }
+
     exports.totalProductos = async (req, res) => {
       try {
         const totalProductos = await Producto.findAll({
@@ -199,5 +219,24 @@ exports.obtenerDetalleProducto = async (req, res) => {
       } catch (error) {
         console.error('Error al obtener los productos por categoria: ', error);
         res.status(500).json({error: "Error interno del servidor"});
+      }
+    }
+
+    exports.buscarProductos = async (req, res) => {
+      try {
+        const {producto} = req.query;
+
+        const productos = await Producto.findAll({
+          include: [Categoria, Proveedor],
+          where: {
+            producto: {
+              [Sequelize.Op.iLike]: `%${producto}%`
+            }
+          }
+        });
+        res.json({productos})
+      } catch (error) {
+        console.error('Error al obtener productos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
       }
     }

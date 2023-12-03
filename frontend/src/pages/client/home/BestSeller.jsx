@@ -10,9 +10,9 @@ const BestSeller = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productosResponse = await axios.get('http://54.226.235.180:3003/api/product/lastproducts')
+        const productosResponse = await axios.get('http://54.224.214.208:3003/api/product/lastproducts')
         setLastProductos(productosResponse.data.productos)
-        const response = await axios.get('http://54.226.235.180:3003/api/admin/categorias')
+        const response = await axios.get('http://54.224.214.208:3003/api/admin/categorias')
         setCategorias(response.data.categorias)
       } catch (error) {
         console.error(error);
@@ -23,8 +23,13 @@ const BestSeller = () => {
 
   const handleCategoriaClick = async (idCategoria) => {
     try {
-      console.log(idCategoria)
-      const response = await axios.get(`http://54.226.235.180:3003/api/product/lastproducts/${idCategoria}`)
+      //console.log(idCategoria)
+      let url = 'http://54.224.214.208:3003/api/product/lastproducts';
+
+      if (idCategoria !== null) {
+        url += `/${idCategoria}`;
+      }
+      const response = await axios.get(url)
       setLastProductos(response.data.productos)
       setCategoriaSeleccionada(idCategoria)
     } catch (error) {
@@ -41,6 +46,7 @@ const BestSeller = () => {
       <div className="container pt-8 pr-10 pl-8 pb-8">
         <h2 className="text-3xl font-primary font-semibold capitalize text-center my-8">Last Products</h2>
         <div className="flex flex-row justify-start md:items-center md:gap-8 gap-4 flex-wrap">
+          <button className={`font-primary text-Blue3 ${categoriaSeleccionada === null ? 'font-bold' : ''}`} onClick={() => handleCategoriaClick(null)}>All products</button>
             {
               categorias.map((categoria) => (
                 <button key={categoria.id_categoria} className={`font-primary text-Blue3 ${categoriaSeleccionada === categoria.id_categoria ? 'font-bold' : ''}`} onClick={() => handleCategoriaClick(categoria.id_categoria)}>{categoria.categoria}</button>
@@ -49,7 +55,7 @@ const BestSeller = () => {
         </div>
         <div className="pt-5 grid lg:grid-cols-4 sm:grid-cols-2 gap-4">
             { lastProducts.map((lastProduct) => (
-              <ProductCard key={lastProduct.id_producto} producto={lastProduct}/>
+              <ProductCard key={lastProduct.id_producto} producto={lastProduct} grid={4}/>
             ))}
         </div>
       </div>

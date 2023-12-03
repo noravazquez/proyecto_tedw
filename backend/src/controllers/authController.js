@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const Usuario = require('../models/usuarios');
+const UsuarioRol = require('../models/usuariorols');
 
 exports.registerUser = async (req, res) => {
   try {
@@ -28,6 +29,11 @@ exports.registerUser = async (req, res) => {
       usuario: req.body.usuario,
       correo: req.body.correo,
       contrasena: hashedPassword,
+    });
+
+    await UsuarioRol.create({
+      id_rol: 2,
+      id_usuario: user.id_usuario,
     });
     
     res.json({ user });

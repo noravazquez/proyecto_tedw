@@ -130,7 +130,13 @@ exports.totalVentasMensual = async (req, res) => {
       carrito.DetalleCarritos.forEach((detalle) => {
         totales.clientes.add(carrito.id_cliente);
         totales.productos.add(detalle.id_producto);
-        totales.montoTotal += carrito.total; 
+        console.log(`Total del carrito (antes de sumar): ${carrito.total}`);
+
+        // Sumar el total del carrito al monto total (convertir a número)
+        totales.montoTotal += Number(carrito.total);
+
+        // Loggear el monto total después de sumar
+        console.log(`Monto total después de sumar: ${totales.montoTotal}`);
       });
     });
 

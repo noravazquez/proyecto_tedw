@@ -5,7 +5,6 @@ import './App.css'
 import SidebarAdmin from './components/SidebarAdmin';*/}
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-
 function App() {
   
   return (
@@ -21,7 +20,7 @@ function App() {
           <NavbarAdmin />
           <Outlet />
         </div>
-    </div>*/}
+  </div>*/}
     </>
   )
 }

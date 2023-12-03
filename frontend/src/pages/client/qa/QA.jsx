@@ -6,6 +6,7 @@ import NotificationSettings from './NotificationSettings';
 import PaymentOptions from './PaymentOptions';
 import SubscriptionPlans from './SubscriptionPlans';
 import AccountOverview from './AccountOverview';
+import BreadCrumb from '../../../components/BreadCrumb';
 
 const QA = () => {
   return (
@@ -14,6 +15,7 @@ const QA = () => {
         <meta charSet="utf-8"/>
         <title>Q&A</title>
       </Helmet>
+      <BreadCrumb title="Q&A"/>
       <div className="bg-gray-100">
         <div className="container mx-auto">
           <div role="article" className="bg-gray-100 py-12 md:px-8">
