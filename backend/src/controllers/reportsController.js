@@ -3,18 +3,18 @@ const  DetalleCarrito = require('../models/detallecarritos');
 const  Cliente = require('../models/clientes');
 const  Carrito = require('../models/carritos');
 const  Producto = require('../models/productos');
-
 const { Op } = require('sequelize');
 
+
 // Reporte Total de ventas semanales
-exports.totalVentasSemanal = async (req, res) =>  {
+exports.totalVentasSemanal = async (req, res) => {
   try {
-    const { year, week } = req.body; 
-    
+    const { year, week } = req.body;
+
     if (!year || !week) {
       return res.status(400).json({ error: 'Se requieren los parámetros year y week.' });
     }
-    
+
     // Obtener todos los carritos con sus detalles, clientes y órdenes relacionadas
     const carritos = await Carrito.findAll({
       include: [
@@ -35,39 +35,41 @@ exports.totalVentasSemanal = async (req, res) =>  {
         },
       ],
     });
-    
+
     // Inicializar totales
     const totales = {
       ordenes: 0,
       clientes: new Set(),
       productos: new Set(),
+      montoTotal: 0, 
     };
-    
+
     // Calcular totales
     carritos.forEach((carrito) => {
       // Contar órdenes
       totales.ordenes += carrito.DetalleCarritos.length;
-      
-      // Agregar clientes y productos a conjuntos para contar únicos
+
+      // Agregar clientes, productos y sumar montos
       carrito.DetalleCarritos.forEach((detalle) => {
-        totales.clientes.add(carrito.Cliente.id_usuario);
+        totales.clientes.add(carrito.id_cliente);
         totales.productos.add(detalle.id_producto);
+        totales.montoTotal += carrito.total; 
       });
     });
-    
+
     // Convertir conjuntos a longitud para obtener la cuenta
     totales.clientes = totales.clientes.size;
     totales.productos = totales.productos.size;
-    
+
     res.json({
       totales,
-      
     });
   } catch (error) {
     console.error('Error al calcular las ventas totales:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
 
 // Función para obtener el rango de fechas según el año y la semana del año
 function obtenerRangoFechaS(year, week) {
