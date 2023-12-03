@@ -3,7 +3,7 @@ const router = express.Router();
 const { ensureAuthenticated } = require('../config/authMiddleware');
 const { totalVentasAnual, estadisticasClientes, totalVentasMensual, totalVentasSemanal, totalProductos, totalClientes} = require('../controllers/reportsController');
 
-router.get('/total-ventas-anual', totalVentasAnual);
+router.post('/total-ventas-anual', totalVentasAnual);
 router.get('/estadisticas-clientes', estadisticasClientes);
 router.post('/total-ventas-mensual', totalVentasMensual);
 router.get('/total-ventas-semanal', totalVentasSemanal);
