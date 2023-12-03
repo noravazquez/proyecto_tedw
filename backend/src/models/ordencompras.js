@@ -22,7 +22,7 @@ OrdenCompra.init({
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  id_detalle_carrito: { 
+  id_carrito: { 
     type: DataTypes.INTEGER,
     allowNull: false,
   },

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Alert from '../../../components/Alert';
 
 const CardRegister = () => {
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const CardRegister = () => {
 
         try {
             console.log('Sending data:', formData)
-            const response = await fetch('http://54.166.237.193:3003/api/auth/register', {
+            const response = await fetch('http://54.224.214.208:3003/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +35,7 @@ const CardRegister = () => {
             });
       
             if (response.ok) {
-                const message = 'Registration successful! Now you can sign in';
+                const message = 'Success';
                 navigate('/login?message=' + message);
             } else {
                 const data = await response.json();
@@ -64,9 +65,12 @@ const CardRegister = () => {
                     </div>
                 </form>
                 {error && (
-                    <div className="text-red-500 text-sm font-normal font-primary">
-                        {error}
-                    </div>
+                    <Alert alert={{
+                        mainColor: 'bg-red-200',
+                        secondaryColor: 'bg-red-200',
+                        title: 'Error',
+                        text: error
+                    }}/>
                 )}
             </div>
         </div>

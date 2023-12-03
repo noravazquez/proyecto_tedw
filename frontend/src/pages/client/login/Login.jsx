@@ -12,8 +12,8 @@ const Login = () => {
   const alert = {
     mainColor: 'bg-green-200',
     secondaryColor: 'border-green-700',
-    title: 'Success',
-    text: message
+    title: message,
+    text: 'Registration successful! Now you can sign in'
   }
 
   return (

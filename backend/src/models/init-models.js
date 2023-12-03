@@ -42,8 +42,8 @@ function initModels(sequelize) {
   clientes.hasMany(ordencompras, { as: "ordencompras", foreignKey: "id_cliente"});
   carritos.belongsTo(cupondescuentos, { as: "id_cupon_descuento_cupondescuento", foreignKey: "id_cupon_descuento"});
   cupondescuentos.hasMany(carritos, { as: "carritos", foreignKey: "id_cupon_descuento"});
-  ordencompras.belongsTo(detallecarritos, { as: "id_detalle_carrito_detallecarrito", foreignKey: "id_detalle_carrito"});
-  detallecarritos.hasMany(ordencompras, { as: "ordencompras", foreignKey: "id_detalle_carrito"});
+  ordencompras.belongsTo(carritos, { as: "id_carrito_carrito", foreignKey: "id_carrito"});
+  carritos.hasMany(ordencompras, { as: "ordencompras", foreignKey: "id_carrito"});
   ordencompras.belongsTo(direccions, { as: "id_direccion_direccion", foreignKey: "id_direccion"});
   direccions.hasMany(ordencompras, { as: "ordencompras", foreignKey: "id_direccion"});
   ordencompras.belongsTo(metodopagos, { as: "id_metodo_pago_metodopago", foreignKey: "id_metodo_pago"});
