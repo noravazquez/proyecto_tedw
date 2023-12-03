@@ -113,28 +113,31 @@ exports.totalVentasMensual = async (req, res) => {
       ],
     });
     
-    // Inicializar totales
-    const totales = {
+     // Inicializar totales
+     const totales = {
       ordenes: 0,
       clientes: new Set(),
       productos: new Set(),
+      montoTotal: 0, 
     };
-    
+
     // Calcular totales
     carritos.forEach((carrito) => {
       // Contar órdenes
       totales.ordenes += carrito.DetalleCarritos.length;
-      
-      // Agregar clientes y productos a conjuntos para contar únicos
+
+      // Agregar clientes, productos y sumar montos
       carrito.DetalleCarritos.forEach((detalle) => {
-        totales.clientes.add(carrito.Cliente.id_usuario);
+        totales.clientes.add(carrito.id_cliente);
         totales.productos.add(detalle.id_producto);
+        totales.montoTotal += carrito.total; 
       });
     });
-    
+
     // Convertir conjuntos a longitud para obtener la cuenta
     totales.clientes = totales.clientes.size;
     totales.productos = totales.productos.size;
+
     
     res.json({
       totales,
@@ -187,25 +190,27 @@ exports.totalVentasAnual = async (req, res) => {
       ],
     });
     
-    // Inicializar totales
-    const totales = {
+     // Inicializar totales
+     const totales = {
       ordenes: 0,
       clientes: new Set(),
       productos: new Set(),
+      montoTotal: 0, 
     };
-    
+
     // Calcular totales
     carritos.forEach((carrito) => {
       // Contar órdenes
       totales.ordenes += carrito.DetalleCarritos.length;
-      
-      // Agregar clientes y productos a conjuntos para contar únicos
+
+      // Agregar clientes, productos y sumar montos
       carrito.DetalleCarritos.forEach((detalle) => {
-        totales.clientes.add(carrito.Cliente.id_usuario);
+        totales.clientes.add(carrito.id_cliente);
         totales.productos.add(detalle.id_producto);
+        totales.montoTotal += carrito.total; 
       });
     });
-    
+
     // Convertir conjuntos a longitud para obtener la cuenta
     totales.clientes = totales.clientes.size;
     totales.productos = totales.productos.size;
