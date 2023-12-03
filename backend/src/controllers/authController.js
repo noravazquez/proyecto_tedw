@@ -33,7 +33,7 @@ exports.registerUser = async (req, res) => {
 
     await UsuarioRol.create({
       id_rol: 2,
-      id_usuario: user.id_rol,
+      id_usuario: user.id_usuario,
     });
     
     res.json({ user });

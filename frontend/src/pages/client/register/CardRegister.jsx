@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -33,8 +34,8 @@ const CardRegister = () => {
             });
       
             if (response.ok) {
-                // Registration successful
-                navigate('/login'); // Redirect to login page
+                const message = 'Registration successful! Now you can sign in';
+                navigate('/login?message=' + message);
             } else {
                 const data = await response.json();
                 setError(data.error)

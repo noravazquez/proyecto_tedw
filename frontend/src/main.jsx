@@ -85,7 +85,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "/login",
+    path: "/login/:message?",
     element: <Login />
   },
   {
