@@ -2,6 +2,8 @@ const  OrdenCompra  = require('../models/ordencompras');
 const  DetalleCarrito = require('../models/detallecarritos');
 const  Cliente = require('../models/clientes');
 const  Carrito = require('../models/carritos');
+const  Producto = require('../models/productos');
+
 const { Op } = require('sequelize');
 
 // Reporte Total de ventas semanales
@@ -246,6 +248,8 @@ exports.estadisticasClientes = async (req, res) => {
   }
 };
 
+
+//reporte total de productos vendidos
 exports.totalProductos = async (req, res) => {
   try {
     const { year } = req.body;
@@ -270,6 +274,10 @@ exports.totalProductos = async (req, res) => {
                 fecha: obtenerRangoFechaAnual(year),
               },
             },
+            {
+              model: Producto,
+              attributes: ['producto'],
+            },
           ],
         },
       ],
@@ -283,14 +291,14 @@ exports.totalProductos = async (req, res) => {
     // Calcular totales
     carritos.forEach((carrito) => {
       carrito.DetalleCarritos.forEach((detalle) => {
-        const idProducto = detalle.id_producto;
+        const nombreProducto = detalle.Producto.producto;
 
-        if (totales.productos[idProducto]) {
+        if (totales.productos[nombreProducto]) {
           // El producto ya existe en el objeto, incrementar la cantidad
-          totales.productos[idProducto] += detalle.cantidad;
+          totales.productos[nombreProducto] += detalle.cantidad;
         } else {
           // El producto no existe en el objeto, agregarlo con la cantidad actual
-          totales.productos[idProducto] = detalle.cantidad;
+          totales.productos[nombreProducto] = detalle.cantidad;
         }
       });
     });
@@ -305,8 +313,7 @@ exports.totalProductos = async (req, res) => {
 };
 
 
-
-
+//reporte de clientes totales registrados
 exports.totalClientes = async (req, res) => {
   try {
     const clientes = await Cliente.findAll();
