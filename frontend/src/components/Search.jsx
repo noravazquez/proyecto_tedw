@@ -10,7 +10,7 @@ const Search = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://54.162.148.240:3003/api/product/buscarProductos?producto=${searchTerm}`)
+                const response = await axios.get(`http://35.153.204.145:3003/api/product/buscarProductos?producto=${searchTerm}`)
                 setActiveSearch(response.data.productos.slice(0,8))
             } catch (error) {
                 console.error(error);

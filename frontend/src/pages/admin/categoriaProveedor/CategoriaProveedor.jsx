@@ -8,9 +8,9 @@ const CategoriaProveedor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://54.162.148.240:3003/api/admin/categorias');
+        const response = await axios.get('http://35.153.204.145:3003/api/admin/categorias');
         setCategorias(response.data.categorias);
-        const responseProveedores = await axios.get('http://54.162.148.240:3003/api/admin/proveedores');
+        const responseProveedores = await axios.get('http://35.153.204.145:3003/api/admin/proveedores');
         setProveedores(responseProveedores.data.proveedors);
       } catch (error) {
         console.error('Error', error);

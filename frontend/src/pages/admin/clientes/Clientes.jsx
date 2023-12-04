@@ -7,7 +7,7 @@ const Clientes = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://54.162.148.240:3003/api/stats/total-clientes-registrados');
+        const response = await axios.get('http://35.153.204.145:3003/api/stats/total-clientes-registrados');
         setClientes(response.data.totales.clientes);
       } catch (error) {
         console.error('Error al obtener el total de ventas mensuales', error);

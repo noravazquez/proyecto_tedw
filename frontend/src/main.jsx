@@ -19,6 +19,7 @@ import Clientes from './pages/admin/clientes/Clientes.jsx';
 import CuponesMetodosPago from './pages/admin/cuponesMetodosPago/CuponesMetodosPago.jsx';
 import OrdenesAdmin from './pages/admin/ordenesAdmin/OrdenesAdmin.jsx';
 import ProductosAdmin from './pages/admin/productosAdmin/ProductosAdmin.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 const router = createBrowserRouter([
   {
@@ -85,7 +86,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: "/login/:message?",
+    path: "/login",
     element: <Login />
   },
   {
@@ -95,5 +96,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />,
+  <AuthProvider>
+    <RouterProvider router={router} />
+  </AuthProvider>,
 )
