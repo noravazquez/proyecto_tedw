@@ -7,15 +7,10 @@ const Cart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Obtén la cookie del navegador
-        const cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)connect.sid\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
         // Configura la solicitud con la cookie
         const response = await axios.get('http://54.242.216.93:3003/api/cart/carrito', {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${cookieValue}`,
-          },
+          withCredentials: true
         });
 
         // Actualiza el estado con los datos del carrito

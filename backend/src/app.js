@@ -23,7 +23,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3003;
 
-app.use(cors());
+app.use(cors({credentials: true}));
 app.use(bodyParser.json());
 
 // Inicialización de Sequelize y sincronización de modelos
