@@ -7,7 +7,7 @@ const PopularProducts = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productosResponse = await axios.get('http://23.20.161.84:3003/api/product/lastproducts')
+        const productosResponse = await axios.get('http://54.162.148.240:3003/api/product/lastproducts')
         setLastProductos(productosResponse.data.productos)
       } catch (error) {
         console.error(error);

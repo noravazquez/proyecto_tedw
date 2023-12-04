@@ -10,7 +10,7 @@ const VentasSemanales = () => {
   useEffect(() => {
     const fetchData = async () => {
         try {
-          const response = await axios.post('http://23.20.161.84:3003/api/stats/total-productos-vendidos', {
+          const response = await axios.post('http://54.162.148.240:3003/api/stats/total-productos-vendidos', {
             year: new Date().getFullYear()
           });
       

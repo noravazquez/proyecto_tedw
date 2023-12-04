@@ -101,7 +101,7 @@ exports.obtenerDetalleProducto = async (req, res) => {
       try {
         const { id } = req.params;
   
-        const resultado = await Producto.destroy({ where: { id } });
+        const resultado = await Producto.destroy({ where: { id_producto: id } });
   
         if (!resultado) {
           return res.status(404).json({ error: 'Producto no encontrado' });

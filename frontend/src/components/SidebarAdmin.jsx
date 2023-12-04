@@ -11,29 +11,29 @@ const SidebarAdmin = () => {
         </div>
         <div className='flex items-center gap-3 py-5 border-b-2 border-white/50'>
             <MdSpaceDashboard color='white'/>
-            <p className='text-sm font-primary font-bold text-Blue5'>Dashboard</p>
+            <a href='/dashboard' className='text-sm font-primary font-bold text-Blue5'>Dashboard</a>
         </div>
         <div className='pt-3 border-b-2 border-white/50'>
             <p className='text-xs font-primary font-extrabold text-Blue6'>PAGES</p>
             <div className='flex items-center gap-2 py-3'>
                 <FaProductHunt color='white'/>
-                <p className='text-sm font-primary font-normal text-Blue5'>Productos</p>
+                <a href='/productosadmin' className='text-sm font-primary font-normal text-Blue5'>Productos</a>
             </div>
             <div className='flex items-center gap-2 py-3'>
                 <GrMoney color='white'/>
-                <p className='text-sm font-primary font-normal text-Blue5'>Ordenes de venta</p>
+                <a href='/ordenesadmin' className='text-sm font-primary font-normal text-Blue5'>Ordenes de venta</a>
             </div>
             <div className='flex items-center gap-2 py-3'>
                 <FaUsers color='white'/>
-                <p className='text-sm font-primary font-normal text-Blue5'>Clientes</p>
+                <a href='/clientes' className='text-sm font-primary font-normal text-Blue5'>Clientes</a>
             </div>
             <div className='flex items-center gap-2 py-3'>
                 <MdPayments color='white'/>
-                <p className='text-sm font-primary font-normal text-Blue5'>Cupones y metodos de pago</p>
+                <a href='/cuponesmetodospago' className='text-sm font-primary font-normal text-Blue5'>Cupones y metodos de pago</a>
             </div>
             <div className='flex items-center gap-2 py-3'>
                 <MdCategory color='white'/>
-                <p className='text-sm font-primary font-normal text-Blue5'>Categorias y proveedores</p>
+                <a href='/categoriaproveedor' className='text-sm font-primary font-normal text-Blue5'>Categorias y proveedores</a>
             </div>
         </div>
     </div>
