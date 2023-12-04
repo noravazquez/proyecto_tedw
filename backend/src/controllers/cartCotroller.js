@@ -89,9 +89,9 @@ exports.agregarAlCarrito = async (req, res) => {
 
 exports.obtenerCarrito = async (req, res) => {
   try {
-    const { id_usuario } = req.params;
+    const { id } = req.params;
     const cliente = await Cliente.findOne({
-      where: { id_usuario: id_usuario },
+      where: { id_usuario: id },
     });
 
     const carrito = await Carrito.findOne({
