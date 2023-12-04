@@ -37,12 +37,10 @@ exports.agregarAlCarrito = async (req, res) => {
     const { idProducto } = req.params;
     const { cantidad } = req.body;
 
-    if (!req.user || !req.user.id_usuario) {
-      return res.status(400).json({ error: 'Usuario no autenticado' });
-    }
+    const { id } = req.params;
 
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_usuario: id },
     });
 
     const carrito = await Carrito.findOne({
@@ -172,12 +170,10 @@ exports.eliminarDelCarrito = async (req, res) => {
   try {
     const { idProducto } = req.params;
 
-    if (!req.user || !req.user.id_usuario) {
-      return res.status(400).json({ error: 'Usuario no autenticado' });
-    }
+    const { id } = req.params;
 
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_usuario: id },
     });
 
     const carrito = await Carrito.findOne({
@@ -219,12 +215,10 @@ exports.eliminarCantidadDelCarrito = async (req, res) => {
   try {
     const { idProducto } = req.params;
 
-    if (!req.user || !req.user.id_usuario) {
-      return res.status(400).json({ error: 'Usuario no autenticado' });
-    }
+    const { id } = req.params;
 
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_usuario: id },
     });
 
     const carrito = await Carrito.findOne({
