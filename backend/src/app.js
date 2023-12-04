@@ -42,7 +42,16 @@ sequelize
     });
 
 // Configuración de Passport y sesiones
-app.use(session({ secret: 'aiura', resave: false, saveUninitialized: false }));
+app.use(session({
+  secret: 'aiura',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, 
+    httpOnly: true,
+    secure: false 
+  }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -51,13 +60,13 @@ app.get('/', (req, res) => {
   res.send('¡Bienvenido a mi aplicación!');
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
+app.use('/api/auth', passport.authenticate('local'), authRoutes);
+app.use('/api/user',passport.authenticate('local'), userRoutes);
 app.use('/api/product', productRoutes);
-app.use('/api/stats', reportsRoutes);
-app.use('/api/address', addressRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/checkout', checkoutRoutes);
+app.use('/api/stats',passport.authenticate('local'), reportsRoutes);
+app.use('/api/address',passport.authenticate('local'), addressRoutes);
+app.use('/api/cart',passport.authenticate('local'), cartRoutes);
+app.use('/api/checkout',passport.authenticate('local'), checkoutRoutes);
 app.use('/api/admin', adminRoutes);
 
 app.listen(PORT, () => {
