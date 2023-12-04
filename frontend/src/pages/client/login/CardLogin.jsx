@@ -24,9 +24,9 @@ const CardLogin = () => {
 
         try {
             const response = await axios.post('http://54.242.216.93:3003/api/auth/login', formData);
-            console.log('Login successful:', response.data);
+            document.cookie = 'usuarioID='+response.data.user.id_usuario+'; exprires=2023-12-05T21:35:35.000Z; path=/';
+            console.log('Login successful:', response.data.user);
             navigate('/');
-
             // Puedes realizar acciones adicionales aquí, como redireccionar a otra página.
         } catch (error) {
             console.error('Login failed:', error.response.data);
