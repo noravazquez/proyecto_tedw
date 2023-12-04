@@ -1,4 +1,7 @@
 const Categoria = require('../models/categorias');
+const Proveedor = require('../models/proveedors');
+const MetodoPago = require('../models/metodopagos');
+const Cupones = require('../models/cupondescuentos')
 
 exports.getAllCategorias = async (req, res) => {
   try {
@@ -123,6 +126,36 @@ exports.eliminarCantidadDelCarrito = async (req, res) => {
     }
   } catch (error) {
     console.error('Error al reducir cantidad del producto en el carrito:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.getAllProveedores = async (req, res) => {
+  try {
+    const proveedors = await Proveedor.findAll();
+    res.json({ proveedors });
+  } catch (error) {
+    console.error('Error al obtener proveedores:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.getAllMetodosPago = async (req, res) => {
+  try {
+    const metodopagos = await MetodoPago.findAll();
+    res.json({ metodopagos });
+  } catch (error) {
+    console.error('Error al obtener metodos:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.getAllCupones = async (req, res) => {
+  try {
+    const cupondescuentos = await Cupones.findAll();
+    res.json({ cupondescuentos });
+  } catch (error) {
+    console.error('Error al obtener cupones:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };

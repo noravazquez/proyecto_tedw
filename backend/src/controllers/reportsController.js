@@ -4,6 +4,7 @@ const  Cliente = require('../models/clientes');
 const  Carrito = require('../models/carritos');
 const  Producto = require('../models/productos');
 const Direccions = require('../models/direccions');
+const MetodoPago = require('../models/metodopagos')
 const { Op, fn, col } = require('sequelize');
 
 
@@ -375,6 +376,58 @@ exports.obtenerOrdenesConDetalles = async (req, res) => {
           attributes: [
             [fn('concat', col('calle'), ', ', col('ciudad'), ', ', col('estado')), 'direccion'],
           ],
+        },
+      ],
+    });
+
+    res.json(ordenes);
+  } catch (error) {
+    console.error('Error al obtener órdenes con detalles:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+exports.ordenes = async (req, res) => {
+  try {
+    const ordenes = await OrdenCompra.findAll({
+      attributes: [
+        'id_orden_compra',
+        'fecha',
+        'estado_orden',
+        [fn('concat', col('Cliente.nombre'), ' ', col('Cliente.apellido_paterno'), ' ', col('Cliente.apellido_materno')), 'cliente'],
+        [fn('concat', col('Direccion.calle'), ', ', col('Direccion.ciudad'), ', ', col('Direccion.estado')), 'direccion'],
+        [fn('concat', col('DetalleCarrito->Producto.producto')), 'producto'],
+        [fn('concat', col('DetalleCarrito.cantidad')), 'cantidad'],
+        [fn('concat', col('DetalleCarrito->Carrito.total')), 'total'],
+        [fn('concat', col('MetodoPago.metodo_pago')), 'metodo_pago'],
+      ],
+      include: [
+        {
+          model: Cliente,
+          as: 'Cliente',
+        },
+        {
+          model: DetalleCarrito,
+          as: 'DetalleCarrito',
+          include: [
+            {
+              model: Carrito,
+              as: 'Carrito',
+            },
+            {
+              model: Producto,
+              as: 'Producto',
+              attributes: ['producto'], // Agrega esto para evitar seleccionar todas las columnas de Producto
+            },
+          ],
+        },
+        {
+          model: Direccions,
+          as: 'Direccion',
+        },
+        {
+          model: MetodoPago,
+          as: 'MetodoPago',
         },
       ],
     });
