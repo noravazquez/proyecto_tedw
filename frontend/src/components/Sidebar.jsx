@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
-import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import { IoMdArrowForward } from 'react-icons/io'
+import { FiTrash2 } from 'react-icons/fi'
+import CartItem from './CartItem'
+import { SidebarContext } from '../context/SidebarContext'
 
 const Sidebar = () => {
+  const { isOpen, handleClose } = useContext(SidebarContext)
   return (
-    <aside className={`fixed top-0 right-0 h-screen}`}>
-        <nav className="h-full flex flex-col bg-Blue6 border-r shadow-sm">
-            <div className="p-4 pb-2 flex justify-between items-center">
-                <button className="p-1.5 rounded-lg text-gray-600">
-                    <FaTimes />
-                </button>
-            </div>
-        </nav>
-    </aside>
+    <div className='w-full bg-white fixed top-0 h-full shadow-2xl md:w-[35vw] xl:max-w-[30vw] transition-all duration-300 z-20 px-4 lg:px-[35px]'>Sidebar</div>
   )
 }
 

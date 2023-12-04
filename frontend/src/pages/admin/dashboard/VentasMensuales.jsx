@@ -11,7 +11,7 @@ const VentasMensuales = () => {
 
     for (let month = 1; month <= 12; month++) {
       try {
-        const response = await axios.post('http://35.153.204.145:3003/api/stats/total-ventas-mensual', {
+        const response = await axios.post('http://34.226.214.97:3003/api/stats/total-ventas-mensual', {
           year: year,
           month: month,
         });

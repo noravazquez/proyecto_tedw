@@ -56,7 +56,7 @@ const VentasAnuales = () => {
       try {
         const ventasPorAnio = await Promise.all(
           years.map(async (year) => {
-            const response = await axios.post('http://35.153.204.145:3003/api/stats/total-ventas-anual', {
+            const response = await axios.post('http://34.226.214.97:3003/api/stats/total-ventas-anual', {
               year: year,
             });
             return { year, total: response.data.totales.montoTotal };

@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Alert from '../../../components/Alert';
-import { useAuth } from '../../../context/AuthContext';
 
 const CardLogin = () => {
-    const { isAuthenticated, login } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         usuario: '',
@@ -25,10 +23,8 @@ const CardLogin = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://35.153.204.145:3003/api/auth/login', formData);
+            const response = await axios.post('http://54.242.216.93:3003/api/auth/login', formData);
             console.log('Login successful:', response.data);
-            login();
-            console.log('After login:', isAuthenticated);
             navigate('/');
 
             // Puedes realizar acciones adicionales aquí, como redireccionar a otra página.
