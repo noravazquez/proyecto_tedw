@@ -51,6 +51,7 @@ app.use(session({
     httpOnly: true,
     secure: false ,
     path: '/',
+    sameSite: 'none'
   }
 }));
 app.use(passport.initialize());
