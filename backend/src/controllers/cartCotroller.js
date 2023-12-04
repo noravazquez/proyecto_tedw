@@ -89,12 +89,9 @@ exports.agregarAlCarrito = async (req, res) => {
 
 exports.obtenerCarrito = async (req, res) => {
   try {
-    if (!req.user || !req.user.id_usuario) {
-      return res.status(400).json({ error: 'Usuario no autenticado' });
-    }
-
+    const { id_usuario } = req.params;
     const cliente = await Cliente.findOne({
-      where: { id_usuario: req.user.id_usuario },
+      where: { id_usuario: id_usuario },
     });
 
     const carrito = await Carrito.findOne({
