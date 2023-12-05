@@ -20,6 +20,7 @@ import CuponesMetodosPago from './pages/admin/cuponesMetodosPago/CuponesMetodosP
 import OrdenesAdmin from './pages/admin/ordenesAdmin/OrdenesAdmin.jsx';
 import ProductosAdmin from './pages/admin/productosAdmin/ProductosAdmin.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
+import CheckOut from './pages/client/checkout/CheckOut.jsx';
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
         element: <QA />
       },
       {
+        path: "/checkout",
+        element: <CheckOut />
+      },
+      {
         path: "/dashboard",
         element: <Dashboard />
       },
@@ -98,5 +103,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <AuthProvider>
     <RouterProvider router={router} />
-  </AuthProvider>,
+  </AuthProvider>
 )

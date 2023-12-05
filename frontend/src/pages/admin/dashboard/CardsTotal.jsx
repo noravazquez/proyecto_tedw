@@ -16,22 +16,22 @@ const CardsTotal = () => {
         const month = today.getMonth() + 1;
         const fetchData = async () => {
             try {
-              const response = await axios.post('http://35.153.204.145:3003/api/stats/total-ventas-mensual', {
+              const response = await axios.post('http://34.226.214.97:3003/api/stats/total-ventas-mensual', {
                 year: year,
                 month: month,
               });
           
               setTotalVentasMes(response.data.totales.montoTotal);
 
-              const anioResponse = await axios.post('http://35.153.204.145:3003/api/stats/total-ventas-anual', {
+              const anioResponse = await axios.post('http://34.226.214.97:3003/api/stats/total-ventas-anual', {
                 year: year
               })
               setTotalVentasAnio(anioResponse.data.totales.montoTotal);
 
-              const clienteResponse = await axios.get('http://35.153.204.145:3003/api/stats/total-clientes-registrados');
+              const clienteResponse = await axios.get('http://34.226.214.97:3003/api/stats/total-clientes-registrados');
               setTotalClientes(clienteResponse.data.totales.total);
 
-              const productosResponse = await axios.get('http://35.153.204.145:3003/api/product/totalProductos');
+              const productosResponse = await axios.get('http://34.226.214.97:3003/api/product/totalProductos');
               setTotalProductos(productosResponse.data.totalProductos[0].totalProductos);
             } catch (error) {
               console.error('Error al obtener el total de ventas mensuales', error);

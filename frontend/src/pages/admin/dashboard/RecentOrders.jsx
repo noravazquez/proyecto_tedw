@@ -7,7 +7,7 @@ const RecentOrders = () => {
     useEffect(() => {
       const fetchData = async () => {
           try {
-            const response = await axios.get('http://35.153.204.145:3003/api/admin/detallesordenes');
+            const response = await axios.get('http://34.226.214.97:3003/api/admin/detallesordenes');
             setOrders(response.data);
           } catch (error) {
             console.error('Error al obtener el total de ventas mensuales', error);

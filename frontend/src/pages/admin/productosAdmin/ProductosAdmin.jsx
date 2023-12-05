@@ -7,7 +7,7 @@ const ProductosAdmin = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://35.153.204.145:3003/api/admin/productos');
+        const response = await axios.get('http://34.226.214.97:3003/api/admin/productos');
         setProductos(response.data.productos);
       } catch (error) {
         console.error('Error', error);

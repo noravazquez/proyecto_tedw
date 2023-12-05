@@ -1,34 +1,28 @@
-/* eslint-disable react/prop-types */
-import axios from 'axios';
+// AuthContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userId, setUserId] = useState(null);
 
-    const login = () => {
-        // Lógica para realizar el inicio de sesión y actualizar el estado
-        setIsAuthenticated(true);
-        console.log('User is logged in:', isAuthenticated);
-    };
+  const setUserIdContext = (id) => {
+    setUserId(id);
+  };
 
-    const logout = () => {
-        axios.get('http://35.153.204.145:3003/api/auth/logout')
-        .then(() => {
-            setIsAuthenticated(false);
-        })
-        .catch((error) => {
-            console.error('Logout failed:', error);
-        });
-    };
-
-    return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ userId, setUserIdContext }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth debe ser utilizado dentro de un AuthProvider');
+  }
+  return context;
+};

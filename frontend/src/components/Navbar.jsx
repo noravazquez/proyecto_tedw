@@ -60,11 +60,10 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="relative inline-flex items-center">
-                    <a href="#"><FaShoppingCart /></a>
-                    <button type="button">
+                    <a href="/cart"><FaShoppingCart /></a>
+                    {/*<button type="button">
                         <div className="absolute -top-3 -right-3 bg-Blue3 text-white rounded-full w-5 h-5 flex items-center justify-center">0</div>
-                    </button>
-                    
+                        </button>*/}
                 </div>
             </div>
 

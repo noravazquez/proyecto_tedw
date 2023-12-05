@@ -34,7 +34,7 @@ const Category = () => {
     useEffect(() => {
         const fetchData = async () =>{
             try {
-                const response = await axios.get('http://35.153.204.145:3003/api/product/productoByCategoria')
+                const response = await axios.get('http://34.207.241.39:3003/api/product/productoByCategoria')
                 setCategorias(response.data.totalByCategoria)
             } catch (error) {
                 console.error(error)

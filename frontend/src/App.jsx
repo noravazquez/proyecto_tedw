@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom'
 import './App.css'
 import NavbarAdmin from './components/NavbarAdmin';
 import SidebarAdmin from './components/SidebarAdmin';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import { useAuth } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 function App() {
-  const { isAuthenticated } = useAuth();
-  console.log(isAuthenticated);
+  const { userId } = useAuth();
+  console.log(userId)
   return (
     <>
       <Navbar />
