@@ -5,12 +5,10 @@ import NavbarAdmin from './components/NavbarAdmin';
 import SidebarAdmin from './components/SidebarAdmin';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { AuthProvider, useAuth } from './context/AuthContext';
 function App() {
-  useEffect(() => {
-    // Intenta obtener las cookies después de que la aplicación ha sido montada
-    const cookies = document.cookie;
-    console.log(cookies);
-  }, []);
+  const { userId } = useAuth();
+  console.log(userId)
   return (
     <>
       <Navbar />

@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Alert from '../../../components/Alert';
+import { useAuth } from '../../../context/AuthContext';
 
 const CardLogin = () => {
+    const { setUserIdContext } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         usuario: '',
@@ -23,9 +25,13 @@ const CardLogin = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://54.242.216.93:3003/api/auth/login', formData);
-            document.cookie = 'usuarioID='+response.data.user.id_usuario+'; exprires=2023-12-05T21:35:35.000Z; path=/';
-            console.log('Login successful:', response.data.user);
+            const response = await axios.post('http://34.207.241.39:3003/api/auth/login', formData);
+            console.log('Login successful:', response.data.user.id_usuario);
+            document.cookie = response.data.user.id_usuario
+            const userId = response.data.user.id_usuario;
+            console.log('Login successful:', userId);
+            
+            setUserIdContext(userId);
             navigate('/');
             // Puedes realizar acciones adicionales aquí, como redireccionar a otra página.
         } catch (error) {

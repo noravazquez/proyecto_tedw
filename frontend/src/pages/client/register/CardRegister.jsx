@@ -26,7 +26,7 @@ const CardRegister = () => {
 
         try {
             console.log('Sending data:', formData)
-            const response = await fetch('http://54.242.216.93:3003/api/auth/register', {
+            const response = await fetch('http://34.207.241.39:3003/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
