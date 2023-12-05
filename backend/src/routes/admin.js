@@ -7,27 +7,23 @@ const { getAllProductos, getProductoById, createProducto, updateProducto, delete
 const router = express.Router();
 
 //Rutas Para cruds categoria
-/*router.get('/categorias', getAllCategorias);
-router.get('/categoria/:id', getCategoriaById);
+router.get('/categorias', authorize(1),getAllCategorias);
+router.get('/categoria/:id',authorize(1), getCategoriaById);
 router.post('/categoria', authorize(1), createCategoria);
 router.put('/categoria/:id', authorize(1), updateCategoria);
-router.delete('/categoria/:id', authorize(1), deleteCategoria);*/
-router.get('/categorias', getAllCategorias);
-router.get('/categoria/:id', getCategoriaById);
-router.post('/categoria', createCategoria);
-router.put('/categoria/:id', updateCategoria);
-router.delete('/categoria/:id', deleteCategoria);
+router.delete('/categoria/:id', authorize(1), deleteCategoria);
 
-router.get('/detallesordenes', obtenerOrdenesConDetalles);
-router.get('/ordenes', ordenes);
 
-router.get('/productos', getAllProductos);
-router.get('/productos/:id', getProductoById);
-router.post('/productos', createProducto);
-router.delete('/productos/:id', deleteProducto);
+router.get('/detallesordenes',authorize(1), obtenerOrdenesConDetalles);
+router.get('/ordenes',authorize(1), ordenes);
 
-router.get('/proveedores', getAllProveedores);
-router.get('/cupondescuentos', getAllCupones);
-router.get('/metodopagos', getAllMetodosPago);
+router.get('/productos',authorize(1), getAllProductos);
+router.get('/productos/:id',authorize(1), getProductoById);
+router.post('/productos',authorize(1), createProducto);
+router.delete('/productos/:id',authorize(1), deleteProducto);
+
+router.get('/proveedores',authorize(1), getAllProveedores);
+router.get('/cupondescuentos',authorize(1), getAllCupones);
+router.get('/metodopagos',authorize(1), getAllMetodosPago);
 
 module.exports = router;
